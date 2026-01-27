@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 public class MainFrame extends JFrame {
 	
@@ -23,20 +24,24 @@ public class MainFrame extends JFrame {
 		//FRAME
 		setResizable(false);
 		setTitle("Onboarding Page");
-		setSize(300,200);
+		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		
+		
+		//LAYOUT
+		setLayout(new BorderLayout());
 		
 		//PANELS
 		JPanel northPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
 		JPanel centerInnerPanel = new JPanel();
-		JPanel loginPanel = new JPanel();
+		
+
 		JPanel signupPanel = new JPanel();
 		
 		
-		//LAYOUT
-		setLayout(new BorderLayout());
+		
 		add(northPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
 		
@@ -60,20 +65,40 @@ public class MainFrame extends JFrame {
 		centerInnerPanel.add(signupBtn);
 		
 		//LOGIN PANEL
-		loginPanel.setLayout(new GridLayout(3, 1, 15, 15));
+		JPanel loginPanel = new JPanel();
+		loginPanel.setLayout(new BorderLayout());
+		JLabel title = new JLabel("Welcome, Please Login", SwingConstants.CENTER);
+		loginPanel.add(title, BorderLayout.NORTH);
+		
+		//LOGIN CENTER
+		JPanel loginCenter = new JPanel();
+		loginCenter.setLayout(new GridLayout(4, 1, 10 ,10));
+		
 		JLabel usernameLbl = new JLabel("username: ");
-		loginPanel.add(usernameLbl);
-		JTextField enterUser = new JTextField(15);
-		enterUser.setPreferredSize(new Dimension(100, 50));
-		loginPanel.add(enterUser);
+		JTextField enterUser = new JTextField();
 		JLabel passwordLbl = new JLabel("password: ");
-		loginPanel.add(passwordLbl);
-		JPasswordField enterPass = new JPasswordField(15);
-		loginPanel.add(enterPass);
+		JPasswordField enterPass = new JPasswordField();
+		
+		loginCenter.add(usernameLbl);
+		loginCenter.add(enterUser);
+		loginCenter.add(passwordLbl);
+		loginCenter.add(enterPass);
+		
+		loginCenter.setBorder(new EmptyBorder(0, 40, 0, 40));
+		
+		loginPanel.add(loginCenter, BorderLayout.CENTER);
+		
+		//LOGIN SOUTH
+		JPanel loginSouth = new JPanel();
+		loginSouth.setLayout(new FlowLayout());
+		
 		JButton loginBtn2 = new JButton("LOG IN");
-		JButton back = new JButton("Back");
-		loginPanel.add(back, BorderLayout.SOUTH);
-		loginPanel.add(loginBtn2, BorderLayout.SOUTH);
+		JButton cancel = new JButton("CANCEL");
+		
+		loginSouth.add(loginBtn2);
+		loginSouth.add(cancel);
+		
+		loginPanel.add(loginSouth, BorderLayout.SOUTH);
 		loginPanel.setVisible(false);
 		
 		//SIGN UP PANEL
@@ -99,11 +124,12 @@ public class MainFrame extends JFrame {
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				add(loginPanel, BorderLayout.CENTER);
+				add(loginPanel);
 				loginPanel.setVisible(true);
 				northPanel.setVisible(false);
 				centerPanel.setVisible(false);
 				centerInnerPanel.setVisible(false);
+				signupPanel.setVisible(false);
 			}
 			
 		});
@@ -117,8 +143,8 @@ public class MainFrame extends JFrame {
 					
 		});
 		
-		//BACK BUTTON BEHAVIOR
-		back.addActionListener(new ActionListener() {
+		//CANCEL BUTTON BEHAVIOR
+		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(false);
@@ -128,6 +154,7 @@ public class MainFrame extends JFrame {
 			}
 			
 		});
+
 		signupBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
