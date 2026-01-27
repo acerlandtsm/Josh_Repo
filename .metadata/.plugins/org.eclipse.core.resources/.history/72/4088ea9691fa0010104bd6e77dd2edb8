@@ -1,0 +1,23 @@
+package myFirstProject;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class MainFrame extends JFrame{
+	public static void main(String[] args) {
+		
+		JPanel panel = new JPanel(new BorderLayout());
+		JLabel label = new JLabel("Login or Sign up");
+		JButton Button = new JButton("Click Me");
+
+		
+		panel.add(Button);
+		panel.add(label);
+		
+		
+	}
+}

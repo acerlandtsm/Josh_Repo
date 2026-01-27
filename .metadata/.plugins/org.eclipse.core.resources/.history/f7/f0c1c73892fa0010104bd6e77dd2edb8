@@ -1,0 +1,23 @@
+package myFirstProject;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class MainFrame extends JFrame {
+	public MainFrame(String title) {
+		super(title);
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+} 
+
+
+
+	

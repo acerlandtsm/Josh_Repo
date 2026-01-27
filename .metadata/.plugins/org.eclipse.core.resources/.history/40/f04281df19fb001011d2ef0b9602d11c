@@ -1,0 +1,63 @@
+package myFirstProject;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+public class MainFrame extends JFrame {
+
+	private JLabel welcomeLbl;
+	private JButton loginBtn;
+	private JButton signupBtn;
+	
+	public MainFrame() {
+		//FRAME
+		setTitle("Example Login Page");
+		setSize(400,200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		
+		//COMPONENTS
+		welcomeLbl = new JLabel("Welcome back", SwingConstants.CENTER);
+		loginBtn = new JButton("LOG IN");
+		signupBtn = new JButton("SIGN UP");
+		
+		//LOGIN BUTTON BEHAVIOR
+		loginBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
+		
+		signupBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
+		
+		//LAYOUT
+		setLayout(new BorderLayout());
+		add(label, BorderLayout.CENTER);
+		add(button, BorderLayout.SOUTH);
+		
+	}
+	public static void main(String[]  args) {
+		SwingUtilities.invokeLater(() -> {
+			new MainFrame().setVisible(true);
+		});
+	}
+} 
+
+
+
+	

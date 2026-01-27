@@ -1,0 +1,24 @@
+package myFirstProject;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class MainFrame {
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Example Login Page");
+		frame.setSize(500, 400);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel("Login or Sign up");
+		JButton Button = new JButton("Click Me");
+		
+		panel.add(Button);
+		frame.add(panel);
+		//frame.add(label);
+	}
+}

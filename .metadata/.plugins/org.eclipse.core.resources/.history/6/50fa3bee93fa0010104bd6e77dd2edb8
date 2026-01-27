@@ -1,0 +1,40 @@
+package myFirstProject;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.GraphicsConfiguration;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class MainFrame extends JFrame {
+	
+	
+	public MainFrame(GraphicsConfiguration gc) {
+		super(gc);
+	}
+	
+	public MainFrame(String title) {
+		super(title);
+	}
+	
+	public MainFrame(String title, GraphicsConfiguration gc) {
+		super(title,gc);
+	}
+	
+	public MainFrame() {
+		setResizable(false);
+		setTitle("Login Frame");
+	}
+	public static void main(String[] args) {
+	MainFrame frame = new MainFrame("Login Page");
+	frame.setSize(400, 300);
+	frame.setVisible(true);
+	}
+} 
+
+
+
+	
