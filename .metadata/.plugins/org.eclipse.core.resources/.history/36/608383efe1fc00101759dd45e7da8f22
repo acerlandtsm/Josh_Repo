@@ -1,0 +1,24 @@
+package josh;
+
+import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class loginPage extends JFrame implements ActionListener {
+	
+	private JLabel lblUsername;
+	private JLabel lblPassword;
+	
+	public loginPage() throws HeadlessException {
+		
+	}
+	
+	public void initGUI() {
+		setResizable(false);
+		setTitle("Login Page");
+		setSize(400, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
