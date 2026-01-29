@@ -1,7 +1,7 @@
 package myFirstProject;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -18,7 +18,10 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener{
+	
+	private JPanel cardPanel;
+	private CardLayout cardLayout;
 	
 	public MainFrame() {
 		//FRAME
@@ -27,147 +30,146 @@ public class MainFrame extends JFrame {
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
-		
-		//LAYOUT
 		setLayout(new BorderLayout());
 		
-		//PANELS
-		JPanel northPanel = new JPanel();
-		JPanel centerPanel = new JPanel();
-		JPanel centerInnerPanel = new JPanel();
+		//CARD LAYOUT
+		cardLayout = new CardLayout();
+		cardPanel = new JPanel(cardLayout);
 		
-
-		JPanel signupPanel = new JPanel();
+		//PANELS		
+		JPanel homePanel = new JPanel(new BorderLayout());	
+		JPanel homePanelNorth = new JPanel();
+		JPanel homePanelCenter = new JPanel(new BorderLayout());
+		JPanel homeCenterInnerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 		
+		JPanel loginPanel = new JPanel(new BorderLayout());
+		JPanel loginPanelCenter = new JPanel(new GridLayout(4, 1, 10 ,10));
+		JPanel loginSouth = new JPanel(new FlowLayout());
 		
+		JPanel signupPanel = new JPanel(new BorderLayout());
+		JPanel signupPanelCenter  = new JPanel(new GridLayout(6, 1, 10, 10));
+		JPanel signupPanelSouth = new JPanel (new FlowLayout());
 		
-		add(northPanel, BorderLayout.NORTH);
-		add(centerPanel, BorderLayout.CENTER);
+		add(homePanel, BorderLayout.CENTER);
 		
 		//NORTH PANEL
-		JLabel welcomeLbl = new JLabel("Welcome back");
-		welcomeLbl.setFont(new Font("Arial", Font.PLAIN, 25));
-		northPanel.add(welcomeLbl, BorderLayout.CENTER);
+		JLabel headerLabel = new JLabel("Welcome back");
+		headerLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+		
+		homePanelNorth.add(headerLabel, BorderLayout.CENTER);
+		homePanel.add(homePanelNorth, BorderLayout.NORTH);
 		
 		//CENTER PANEL
-		JLabel welcomeLbl2 = new JLabel("login now or sign up!", SwingConstants.CENTER);
-		welcomeLbl2.setFont(new Font("Arial", Font.PLAIN, 16));
-		centerPanel.setLayout(new BorderLayout());
-		centerPanel.add(welcomeLbl2, BorderLayout.CENTER);
-		centerPanel.add(centerInnerPanel, BorderLayout.SOUTH);
+		JLabel headerLabel2 = new JLabel("login now or sign up!", SwingConstants.CENTER);
+		headerLabel2.setFont(new Font("Arial", Font.PLAIN, 16));
+		
+		homePanelCenter.add(headerLabel2, BorderLayout.CENTER);
+		homePanel.add(homePanelCenter, BorderLayout.CENTER);
 
 		//CENTER INNER PANEL
-		centerInnerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
-		JButton loginBtn = new JButton("LOG IN");
-		JButton signupBtn = new JButton("SIGN UP");
-		centerInnerPanel.add(loginBtn);
-		centerInnerPanel.add(signupBtn);
+		JButton loginButton = new JButton("LOG IN");
+		JButton signupButton = new JButton("SIGN UP");
+		
+		loginButton.setActionCommand("openLoginPanel");
+		signupButton.setActionCommand("openSignupPanel");
+		loginButton.addActionListener(this);
+		signupButton.addActionListener(this);
+		
+		homeCenterInnerPanel.add(loginButton);
+		homeCenterInnerPanel.add(signupButton);
+		homePanelCenter.add(homeCenterInnerPanel, BorderLayout.SOUTH);
 		
 		//LOGIN PANEL
-		JPanel loginPanel = new JPanel();
-		loginPanel.setLayout(new BorderLayout());
-		JLabel title = new JLabel("Welcome, Please Login", SwingConstants.CENTER);
-		loginPanel.add(title, BorderLayout.NORTH);
+		JLabel loginHeader = new JLabel("Welcome, Please Login", SwingConstants.CENTER);	
+		loginPanel.add(loginHeader, BorderLayout.NORTH);
 		
 		//LOGIN CENTER
-		JPanel loginCenter = new JPanel();
-		loginCenter.setLayout(new GridLayout(4, 1, 10 ,10));
+		JLabel usernameLabel = new JLabel("username: ");
+		JLabel passwordLabel = new JLabel("password: ");
+		JTextField enterUsername = new JTextField();
+		JPasswordField enterPassword = new JPasswordField();
 		
-		JLabel usernameLbl = new JLabel("username: ");
-		JTextField enterUser = new JTextField();
-		JLabel passwordLbl = new JLabel("password: ");
-		JPasswordField enterPass = new JPasswordField();
+		loginPanelCenter.add(usernameLabel);
+		loginPanelCenter.add(enterUsername);
+		loginPanelCenter.add(passwordLabel);
+		loginPanelCenter.add(enterPassword);
 		
-		loginCenter.add(usernameLbl);
-		loginCenter.add(enterUser);
-		loginCenter.add(passwordLbl);
-		loginCenter.add(enterPass);
-		
-		loginCenter.setBorder(new EmptyBorder(0, 40, 0, 40));
-		
-		loginPanel.add(loginCenter, BorderLayout.CENTER);
+		loginPanelCenter.setBorder(new EmptyBorder(0, 40, 0, 40));
+
+		loginPanel.add(loginPanelCenter, BorderLayout.CENTER);
 		
 		//LOGIN SOUTH
-		JPanel loginSouth = new JPanel();
-		loginSouth.setLayout(new FlowLayout());
+		JButton loginButton2 = new JButton("LOG IN");
+		JButton cancelButton = new JButton("CANCEL");
 		
-		JButton loginBtn2 = new JButton("LOG IN");
-		JButton cancel = new JButton("CANCEL");
-		
-		loginSouth.add(loginBtn2);
-		loginSouth.add(cancel);
+		cancelButton.setActionCommand("backToHome");
+		cancelButton.addActionListener(this);
+		loginSouth.add(loginButton2);
+		loginSouth.add(cancelButton);
 		
 		loginPanel.add(loginSouth, BorderLayout.SOUTH);
-		loginPanel.setVisible(false);
 		
 		//SIGN UP PANEL
-		signupPanel.setLayout(new FlowLayout());
-		JLabel usernameLbl2 = new JLabel("Enter username: ");
-		signupPanel.add(usernameLbl2);
-		JTextField enterUser2 = new JTextField(15);
-		signupPanel.add(enterUser2);
-		JLabel passwordLbl2 = new JLabel("Enter password: ");
-		signupPanel.add(passwordLbl2);
-		JPasswordField enterPass2 = new JPasswordField(15);
-		signupPanel.add(enterPass2);
-		JLabel passwordLbl3 = new JLabel("confirm password: ");
-		signupPanel.add(passwordLbl3);
-		JPasswordField enterPass3 = new JPasswordField(15);
-		signupPanel.add(enterPass3);
-		JButton signupBtn2 = new JButton("SIGNUP");
-		signupPanel.add(signupBtn2);
-		signupPanel.setVisible(false);
-		
-		
-		//LOGIN BUTTON BEHAVIOR
-		loginBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				add(loginPanel);
-				loginPanel.setVisible(true);
-				northPanel.setVisible(false);
-				centerPanel.setVisible(false);
-				centerInnerPanel.setVisible(false);
-				signupPanel.setVisible(false);
-			}
-			
-		});
-		
-		//LOGIN BUTTON2 BEHAVIOR
-		loginBtn2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		JLabel signupHeader = new JLabel("Sign up with us now!", SwingConstants.CENTER);
+		signupPanel.add(signupHeader, BorderLayout.NORTH);
 
-			}
-					
-		});
+		//SIGN UP PANEL CENTER		
 		
-		//CANCEL BUTTON BEHAVIOR
-		cancel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loginPanel.setVisible(false);
-				northPanel.setVisible(true);
-				centerPanel.setVisible(true);
-				centerInnerPanel.setVisible(true);
-			}
-			
-		});
+		JLabel usernameLabel2 = new JLabel("Enter username: ");
+		JLabel passwordLabel2 = new JLabel("Enter password: ");
+		JLabel passwordLabel3 = new JLabel("confirm password: ");
+		JTextField enterUsername2 = new JTextField(15);
+		JPasswordField enterPassword2 = new JPasswordField(15);
+		JPasswordField enterPassword3 = new JPasswordField(15);
 
-		signupBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				add(signupPanel, BorderLayout.CENTER);
-				signupPanel.setVisible(true);
-				northPanel.setVisible(false);
-				centerPanel.setVisible(false);
-				centerInnerPanel.setVisible(false);
-			}
-			
-		});
+		signupPanelCenter.add(usernameLabel2);
+		signupPanelCenter.add(enterUsername2);
+		signupPanelCenter.add(passwordLabel2);
+		signupPanelCenter.add(enterPassword2);
+		signupPanelCenter.add(passwordLabel3);
+		signupPanelCenter.add(enterPassword3);
+
+		signupPanelCenter.setBorder(new EmptyBorder(0, 40, 0, 40));
 		
+		signupPanel.add(signupPanelCenter, BorderLayout.CENTER);
+		
+		//SIGN UP PANEL SOUTH
+		JButton signupButton2 = new JButton("SIGNUP");
+		JButton cancelButton2 = new JButton("CANCEL");
+		
+		cancelButton2.setActionCommand("backToHome");
+		cancelButton2.addActionListener(this);
+		
+		signupPanelSouth.add(signupButton2);
+		signupPanelSouth.add(cancelButton2);
+		
+		signupPanel.add(signupPanelSouth, BorderLayout.SOUTH);
+		
+		cardPanel.add(homePanel, "main");
+		cardPanel.add(loginPanel, "login");
+		cardPanel.add(signupPanel, "signup");
+		
+		add(cardPanel);
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		
+		switch(command) {
+			case "openLoginPanel":
+				cardLayout.show(cardPanel, "login");
+				break;
+				
+			case "openSignupPanel":
+				cardLayout.show(cardPanel, "signup");
+				break;
+			
+			case "backToHome":
+				cardLayout.show(cardPanel, "main");
+				break;
+		}
+	}
+	
 	public static void main(String[]  args) {
 		SwingUtilities.invokeLater(() -> {
 			new MainFrame().setVisible(true);
