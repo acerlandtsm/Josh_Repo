@@ -1,0 +1,59 @@
+package database;
+
+import database.DBConnection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Database {
+	
+	static final String DB_NAME = "users_db";
+	static final String DB_URL = "jdbc:postgresql://localhost:5432/" + DB_NAME;
+	
+	public static void main(String[] args) {
+	}
+	
+	public static void createDatabase() {
+		try (Connection conn = DBConnection.getConnection();
+				Statement stmt = conn.createStatement()) {
+			System.out.println("Creating Database...");
+			
+			stmt.executeUpdate("CREATE DATABASE" + DB_NAME);
+			
+			System.out.println("Database '" + DB_NAME + "' created successfully!");
+			
+		} catch (SQLException e) {
+			if (e.getSQLState().equals("42P04")) {
+				System.out.println("Database already exists. Skipping creation.");
+			} else {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void createTable() {
+		String sql = 	"CREATE TABLE IF NOT EXISTS USERS (" +
+						"id SERIAL PRIMARY KEY, " +
+						"USERNAME VARCHAR(50) NOT NULL, " +
+						"PASSWORD VARCHAR(50)";
+		
+		try (Connection conn = DBConnection.getConnection();
+				Statement stmt = conn.createStatement()) {
+			
+			stmt.executeUpdate(sql);
+			System.out.println("Table 'USERS' created");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static boolean registerUser(String username, String password) {
+		String sql = "INSERT INTO USERS (username, password) VALUES (?, ?)";
+		
+		try (Connection conn = DBConnection.getConnection();
+				Statement stmt = conn.prepareStatement(sql)) {
+		
+	}
+}

@@ -6,22 +6,27 @@
 		<item value="bitbucket.org"/>
 	</list>
 	<list key="CommitDialog.authorValues">
+		<item value="ChnkyJo &lt;ChnkyJo@github.com&gt;"/>
 		<item value="mboriga &lt;mboriga@itd-003.acerland.com&gt;"/>
 	</list>
 	<list key="CommitDialog.committerValues">
+		<item value="ChnkyJo &lt;ChnkyJo@github.com&gt;"/>
 		<item value="mboriga &lt;mboriga@itd-003.acerland.com&gt;"/>
 	</list>
 	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
 		<item key="MAIN_SASH_FORM_ORIENTATION_VERTICAL" value="true"/>
 		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="500,500"/>
-		<item key="STAGING_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="500,500"/>
 		<item key="sortItemState" value="false"/>
 	</section>
 	<section name="GitCommitMessageComponent">
+		<list key="/home/mboriga/git/sample/.git">
+			<item value="empty"/>
+		</list>
 	</section>
 	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="635"/>
-		<item key="DIALOG_Y_ORIGIN" value="212"/>
+		<item key="DIALOG_X_ORIGIN" value="767"/>
+		<item key="DIALOG_Y_ORIGIN" value="227"/>
 		<item key="DIALOG_WIDTH" value="656"/>
 		<item key="DIALOG_HEIGHT" value="466"/>
 		<item key="DIALOG_FONT_NAME" value="1|Cantarell|11.0|0|GTK|1|"/>
