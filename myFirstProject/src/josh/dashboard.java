@@ -3,6 +3,7 @@ package josh;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
@@ -15,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -25,15 +27,27 @@ public class dashboard extends JFrame implements ActionListener {
 	private Border LINE_BORDER = BorderFactory.createLineBorder(Color.BLACK);
 	
 	private JPanel pnlMain;
+	private JPanel pnlCenter;
+	private CardLayout cardLayout;
+	private JFrame frameSignOut;
 	
 	private JLabel lblUsername;
+	private JLabel lblAreYouSure;
 	private String username = "namespaceUser";
+	
 	private JButton btnSignout;
 	private JButton btnHome;
 	private JButton btnProducts;
 	private JButton btnCustomers;
 	private JButton btnSales;
 	private JButton btnUsers;
+	
+	private JButton btnYes;
+	private JButton btnNo;
+	
+	private loginPage loginPage;
+	private productsPage productsPage;
+	private customersPage customersPage;
 	
 	
 	public dashboard() throws HeadlessException {
@@ -69,26 +83,33 @@ public class dashboard extends JFrame implements ActionListener {
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(LINE_BORDER);
 				{
-					lblUsername = new JLabel("Hello and welcome back " + username);
+					lblUsername = new JLabel("User: " + username);
 					pnlNorth.add(lblUsername, BorderLayout.LINE_START);
-					lblUsername.setFont(new Font("Arial", Font.BOLD, 25));
+					lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
 					
 					btnSignout = new JButton("Sign Out");
 					pnlNorth.add(btnSignout, BorderLayout.LINE_END);
+					btnSignout.setActionCommand("sign out");
+					btnSignout.addActionListener(this);
 				} 
 			}
 			{
-				JPanel pnlCenter = new JPanel(new CardLayout());
+				cardLayout = new CardLayout();
+				pnlCenter = new JPanel(cardLayout);
 				pnlMain.add(pnlCenter, BorderLayout.CENTER);
 				pnlCenter.setBorder(LINE_BORDER);
 				{
-					//ADD CENTER PANELS HERE FOR CARD LAYOUT
+
+					productsPage = new productsPage();
+					pnlCenter.add(productsPage, "products");
+					customersPage = new customersPage();
+					pnlCenter.add(customersPage, "customers");
 				}
 			}
 			{
-				JPanel pnlLineStart = new JPanel(new GridLayout(6, 1, 10, 1));
+				JPanel pnlLineStart = new JPanel(new GridLayout(6, 1, 10, 10));
 				pnlMain.add(pnlLineStart, BorderLayout.LINE_START);
-				pnlLineStart.setBorder(LINE_BORDER);
+				pnlLineStart.setBorder(new EmptyBorder(20, 15, 20, 15));
 				{
 					btnHome = new JButton("HOME");
 					pnlLineStart.add(btnHome);
@@ -97,36 +118,92 @@ public class dashboard extends JFrame implements ActionListener {
 					
 					btnProducts = new JButton("PRODUCTS");
 					pnlLineStart.add(btnProducts);
-					btnHome.setActionCommand("products");
-					btnHome.addActionListener(this);
+					btnProducts.setActionCommand("products");
+					btnProducts.addActionListener(this);
 					
 					btnCustomers = new JButton("CUSTOMERS");
 					pnlLineStart.add(btnCustomers);
-					btnHome.setActionCommand("customers");
-					btnHome.addActionListener(this);
+					btnCustomers.setActionCommand("customers");
+					btnCustomers.addActionListener(this);
 					
 					btnSales = new JButton("SALES");
 					pnlLineStart.add(btnSales);
-					btnHome.setActionCommand("sales");
-					btnHome.addActionListener(this);
+					btnSales.setActionCommand("sales");
+					btnSales.addActionListener(this);
 					
 					btnUsers = new JButton("USERS");
 					pnlLineStart.add(btnUsers);
-					btnHome.setActionCommand("users");
-					btnHome.addActionListener(this);
+					btnUsers.setActionCommand("users");
+					btnUsers.addActionListener(this);
 				}
 			}
-			
+		}
+		
+		{
+			frameSignOut = new JFrame();
+			frameSignOut.setVisible(false);
+			frameSignOut.setResizable(false);
+			frameSignOut.setTitle("");
+			frameSignOut.setSize(400, 200);
+			frameSignOut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frameSignOut.setLocationRelativeTo(null);
+			frameSignOut.setLayout(new BorderLayout());
+			{
+				JPanel pnlMainSignOut = new JPanel(new BorderLayout(3,3));
+				frameSignOut.add(pnlMainSignOut, BorderLayout.CENTER);
+				{
+					JPanel pnlSignOutCenter = new JPanel(new BorderLayout(3, 3));
+					pnlMainSignOut.add(pnlSignOutCenter, BorderLayout.CENTER);
+					{
+						lblAreYouSure = new JLabel("Are you sure you want to sign out?", SwingConstants.CENTER);
+						pnlCenter.add(lblAreYouSure, BorderLayout.CENTER);
+						lblAreYouSure.setFont(new Font("Arial", Font.PLAIN, 15));
+					}
+				}
+				{
+					JPanel pnlSouth = new JPanel(new FlowLayout());
+					pnlMainSignOut.add(pnlSouth, BorderLayout.SOUTH);
+					{
+						btnYes = new JButton("Yes");
+						pnlSouth.add(btnYes);
+						btnYes.setActionCommand("yes");
+						btnYes.addActionListener(this);
+						
+						btnNo = new JButton("No");
+						pnlSouth.add(btnNo);
+						btnNo.setActionCommand("no");
+						btnNo.addActionListener(this);
+					}
+				}
+			}
 		}
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		
 		switch (actionCommand) {
-		case "home":
+		case "sign out":
+			frameSignOut.setVisible(true);
 			break;
+
+		case "yes":
+			frameSignOut.setVisible(false);
+			loginPage = new loginPage();
+			loginPage.setVisible(true);
+			this.dispose();
+			break;
+		
+		case "no":
+			frameSignOut.setVisible(false);
+			break;
+			
+		case "products":
+		case "customers":
+			cardLayout.show(pnlCenter, actionCommand);
+			break;
+		
 		default:
 			break;
 		}

@@ -1,4 +1,4 @@
 RepositorySearchDialogSearchPath=/home/mboriga/git
-commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Created a Login Page Class and updated structure and syntax.</message>\n<message>Created a Login Page Class and fixed coding structures.</message>\n<message>Updated Script for Login and Sign-up, added ActionCommand and&\#x0A;CardLayout.</message>\n<message>Initial Commit</message>\n</messages>
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Added Sign-up page. Added Sample Dashboard.</message>\n<message>Created a Login Page Class and updated structure and syntax.</message>\n<message>Created a Login Page Class and fixed coding structures.</message>\n<message>Updated Script for Login and Sign-up, added ActionCommand and&\#x0A;CardLayout.</message>\n<message>Initial Commit</message>\n</messages>
 eclipse.preferences.version=1
 repositories_view_filters=<?xml version\="1.0" encoding\="UTF-8"?>\n<FilterCache/>

@@ -1,0 +1,69 @@
+package josh;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GraphicsConfiguration;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+
+public class signupPage extends JFrame implements ActionListener {
+	
+	//VARIABLES
+	private Border LINE_BORDER = BorderFactory.createLineBorder(Color.GRAY);
+	
+	private JPanel pnlMain;
+	
+	private JLabel lblsignInNow;
+	private JLabel lblUsername;
+	private JLabel lblPassword;
+	private JLabel lblConfirmPassword;
+	
+	private JTextField txtFieldUsername;
+	private JPasswordField passFieldPassword;
+	private JPasswordField passFieldConfirmPassword;
+	
+	private JButton btnSignup;
+	private JButton btnCancel;
+	
+	public signupPage() throws HeadlessException {
+		initGUI();
+	}
+
+	public signupPage(GraphicsConfiguration gc) {
+		super(gc);
+	}
+	
+	public signupPage(String title) throws HeadlessException{
+		
+	}
+	
+	public signupPage(String title, GraphicsConfiguration gc) {
+		super(title, gc);
+	} 
+	
+	private void initGUI() {
+		setResizable(false);
+		setTitle("Signup Page");
+		setSize(400, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setLayout(new BorderLayout());
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

@@ -48,7 +48,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public MainFrame(String title, GraphicsConfiguration gc) {
 		super(title, gc);
 	}
-	
+	 
 	//INITIALIZE GUI
 	private void initGUI() {
 		setResizable(false);
