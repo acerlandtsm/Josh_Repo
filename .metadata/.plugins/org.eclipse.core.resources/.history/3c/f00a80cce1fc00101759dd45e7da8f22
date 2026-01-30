@@ -1,8 +1,0 @@
-package josh;
-
-public class loginPage extends JFrame implements ActionListener {
-	
-	private JLabel lblUsername;
-	private JLabel lblPassword;
-	
-}

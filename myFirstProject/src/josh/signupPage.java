@@ -20,45 +20,46 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-public class loginPage extends JFrame implements ActionListener {
+public class signupPage extends JFrame implements ActionListener {
 	
-	//VARIABLES AND DECLARATIONS
+	//VARIABLES
 	private Border LINE_BORDER = BorderFactory.createLineBorder(Color.GRAY);
 	
 	private MainFrame MainFrame;
-	private dashboard dashboard;
 	
 	private JPanel pnlMain;
-	private JLabel lblPleaseLogIn;
+	
+	private JLabel lblSignUpNow;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
+	private JLabel lblConfirmPassword;
 	
 	private JTextField txtFieldUsername;
 	private JPasswordField passFieldPassword;
+	private JPasswordField passFieldConfirmPassword;
 	
-	private JButton btnLogin;
+	private JButton btnSignup;
 	private JButton btnCancel;
 	
-	public loginPage() throws HeadlessException {
+	public signupPage() throws HeadlessException {
 		initGUI();
 	}
-	
-	public loginPage(GraphicsConfiguration gc) {
+
+	public signupPage(GraphicsConfiguration gc) {
 		super(gc);
 	}
 	
-	public loginPage(String title) throws HeadlessException {
-		super(title);
+	public signupPage(String title) throws HeadlessException{
+		
 	}
 	
-	public loginPage(String title, GraphicsConfiguration gc) {
+	public signupPage(String title, GraphicsConfiguration gc) {
 		super(title, gc);
-	}
+	} 
 	
-	//INITIALIZE GUI
-	public void initGUI() {
+	private void initGUI() {
 		setResizable(false);
-		setTitle("Login Page");
+		setTitle("Signup Page");
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -69,24 +70,24 @@ public class loginPage extends JFrame implements ActionListener {
 			add(pnlMain, BorderLayout.CENTER);
 			pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
 			pnlMain.setBorder(LINE_BORDER);
-			{//NORTH PANEL
-				JPanel pnlNorth = new JPanel(new BorderLayout(5, 5));
+			{
+				JPanel pnlNorth = new JPanel(new BorderLayout(5,5));
 				add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(LINE_BORDER);
 				{
-					lblPleaseLogIn = new JLabel("Please Login your Account", SwingConstants.CENTER);
-					pnlNorth.add(lblPleaseLogIn, BorderLayout.NORTH);
+					lblSignUpNow = new JLabel("Signup with us Now!", SwingConstants.CENTER);
+					pnlNorth.add(lblSignUpNow, BorderLayout.NORTH);
 				}
 			}
-			{//CENTER PANEL
-				JPanel pnlCenter = new JPanel(new GridLayout(3, 3, 10, 1));
+			{
+				JPanel pnlCenter = new JPanel(new GridLayout(4, 4, 10, 1));
 				add(pnlCenter, BorderLayout.CENTER);
 				pnlCenter.setBorder(LINE_BORDER);
 				{
-					lblUsername = new JLabel("Username: ", SwingConstants.CENTER);
+					lblUsername = new JLabel("New Username: ", SwingConstants.CENTER);
 					pnlCenter.add(lblUsername);
 					
-					txtFieldUsername = new JTextField();
+					txtFieldUsername= new JTextField();
 					pnlCenter.add(txtFieldUsername);
 					
 					lblPassword = new JLabel("Password: ", SwingConstants.CENTER);
@@ -95,17 +96,23 @@ public class loginPage extends JFrame implements ActionListener {
 					passFieldPassword = new JPasswordField();
 					pnlCenter.add(passFieldPassword);
 					
+					lblConfirmPassword = new JLabel("Confirm Password: ");
+					pnlCenter.add(lblConfirmPassword);
+					
+					passFieldConfirmPassword = new JPasswordField();
+					pnlCenter.add(passFieldConfirmPassword);
+					
 				}
 			}
-			{//SOUTH PANEL
+			{
 				JPanel pnlSouth = new JPanel(new FlowLayout());
 				add(pnlSouth, BorderLayout.SOUTH);
 				pnlSouth.setBorder(LINE_BORDER);
 				{
-					btnLogin = new JButton("LOGIN");
-					pnlSouth.add(btnLogin);
-					btnLogin.setActionCommand("login");
-					btnLogin.addActionListener(this);
+					btnSignup = new JButton("SIGNUP");
+					pnlSouth.add(btnSignup);
+					btnSignup.setActionCommand("signup");
+					btnSignup.addActionListener(this);
 					
 					btnCancel = new JButton("CANCEL");
 					pnlSouth.add(btnCancel);
@@ -115,23 +122,25 @@ public class loginPage extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		
 		switch (actionCommand) {
-		case "login":
-			dashboard = new dashboard();
-			dashboard.setVisible(true);
-			this.dispose();
+		case "signup":
+			MainFrame = new MainFrame();
+			MainFrame.setVisible(true);
+			this.dispose();		
 			break;
 		case "cancel":
 			MainFrame = new MainFrame();
 			MainFrame.setVisible(true);
-			this.dispose();
+			this.dispose();		
 			break;
 		default:
 			System.out.println("Please Try Again.");
 		}
 	}
+	
 }

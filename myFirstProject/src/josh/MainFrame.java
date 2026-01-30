@@ -31,7 +31,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnSignUp;
 	
 	private loginPage loginPage;
-//	private Signup signupFrame;
+	private signupPage signupPage;
 
 	public MainFrame() throws HeadlessException {
 		initGUI();
@@ -107,7 +107,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
-		
+
 		switch (actionCommand) {
 		case "Login":
 			loginPage = new loginPage();
@@ -115,7 +115,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			this.dispose();
 			break;
 		case "SignUp":
-			
+			signupPage = new signupPage();
+			signupPage.setVisible(true);
+			this.dispose();
+			break;
 		default:
 			System.out.println("Please Try Again.");
 		}
