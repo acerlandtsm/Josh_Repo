@@ -28,7 +28,6 @@ public class dashboard extends JFrame implements ActionListener {
 	
 	private JPanel pnlMain;
 	private JPanel pnlCenter;
-	private CardLayout cardLayout;
 	private JFrame frameSignOut;
 	
 	private JLabel lblUsername;
@@ -44,10 +43,6 @@ public class dashboard extends JFrame implements ActionListener {
 	
 	private JButton btnYes;
 	private JButton btnNo;
-	
-	private loginPage loginPage;
-	private productsPage productsPage;
-	private customersPage customersPage;
 	
 	
 	public dashboard() throws HeadlessException {
@@ -81,11 +76,11 @@ public class dashboard extends JFrame implements ActionListener {
 			{
 				JPanel pnlNorth = new JPanel(new BorderLayout(3, 3));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(LINE_BORDER);
+				pnlNorth.setBorder(new EmptyBorder(5, 5, 5, 5));
 				{
-					lblUsername = new JLabel("User: " + username);
+					lblUsername = new JLabel("Hello and welcome back " + username);
 					pnlNorth.add(lblUsername, BorderLayout.LINE_START);
-					lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
+					lblUsername.setFont(new Font("Arial", Font.BOLD, 25));
 					
 					btnSignout = new JButton("Sign Out");
 					pnlNorth.add(btnSignout, BorderLayout.LINE_END);
@@ -94,16 +89,11 @@ public class dashboard extends JFrame implements ActionListener {
 				} 
 			}
 			{
-				cardLayout = new CardLayout();
-				pnlCenter = new JPanel(cardLayout);
+				pnlCenter = new JPanel(new CardLayout());
 				pnlMain.add(pnlCenter, BorderLayout.CENTER);
 				pnlCenter.setBorder(LINE_BORDER);
 				{
-
-					productsPage = new productsPage();
-					pnlCenter.add(productsPage, "products");
-					customersPage = new customersPage();
-					pnlCenter.add(customersPage, "customers");
+					//ADD CENTER PANELS HERE FOR CARD LAYOUT
 				}
 			}
 			{
@@ -118,23 +108,23 @@ public class dashboard extends JFrame implements ActionListener {
 					
 					btnProducts = new JButton("PRODUCTS");
 					pnlLineStart.add(btnProducts);
-					btnProducts.setActionCommand("products");
-					btnProducts.addActionListener(this);
+					btnHome.setActionCommand("products");
+					btnHome.addActionListener(this);
 					
 					btnCustomers = new JButton("CUSTOMERS");
 					pnlLineStart.add(btnCustomers);
-					btnCustomers.setActionCommand("customers");
-					btnCustomers.addActionListener(this);
+					btnHome.setActionCommand("customers");
+					btnHome.addActionListener(this);
 					
 					btnSales = new JButton("SALES");
 					pnlLineStart.add(btnSales);
-					btnSales.setActionCommand("sales");
-					btnSales.addActionListener(this);
+					btnHome.setActionCommand("sales");
+					btnHome.addActionListener(this);
 					
 					btnUsers = new JButton("USERS");
 					pnlLineStart.add(btnUsers);
-					btnUsers.setActionCommand("users");
-					btnUsers.addActionListener(this);
+					btnHome.setActionCommand("users");
+					btnHome.addActionListener(this);
 				}
 			}
 		}
@@ -152,11 +142,11 @@ public class dashboard extends JFrame implements ActionListener {
 				JPanel pnlMainSignOut = new JPanel(new BorderLayout(3,3));
 				frameSignOut.add(pnlMainSignOut, BorderLayout.CENTER);
 				{
-					JPanel pnlSignOutCenter = new JPanel(new BorderLayout(3, 3));
-					pnlMainSignOut.add(pnlSignOutCenter, BorderLayout.CENTER);
+					pnlCenter = new JPanel(new BorderLayout(3, 3));
+					pnlMainSignOut.add(pnlCenter, BorderLayout.CENTER);
 					{
 						lblAreYouSure = new JLabel("Are you sure you want to sign out?", SwingConstants.CENTER);
-						pnlMainSignOut.add(lblAreYouSure, BorderLayout.CENTER);
+						pnlCenter.add(lblAreYouSure, BorderLayout.CENTER);
 						lblAreYouSure.setFont(new Font("Arial", Font.PLAIN, 15));
 					}
 				}
@@ -178,32 +168,18 @@ public class dashboard extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		
 		switch (actionCommand) {
+		case "home":
+			break;
+			
 		case "sign out":
 			frameSignOut.setVisible(true);
 			break;
-
-		case "yes":
-			frameSignOut.setVisible(false);
-			loginPage = new loginPage();
-			loginPage.setVisible(true);
-			this.dispose();
-			break;
-		
-		case "no":
-			frameSignOut.setVisible(false);
-			break;
-			
-		case "products":
-		case "customers":
-			cardLayout.show(pnlCenter, actionCommand);
-			break;
-		
 		default:
 			break;
 		}

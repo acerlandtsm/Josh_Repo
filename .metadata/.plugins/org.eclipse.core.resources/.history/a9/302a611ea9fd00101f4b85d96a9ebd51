@@ -28,7 +28,6 @@ public class dashboard extends JFrame implements ActionListener {
 	
 	private JPanel pnlMain;
 	private JPanel pnlCenter;
-	private CardLayout cardLayout;
 	private JFrame frameSignOut;
 	
 	private JLabel lblUsername;
@@ -94,16 +93,14 @@ public class dashboard extends JFrame implements ActionListener {
 				} 
 			}
 			{
-				cardLayout = new CardLayout();
-				pnlCenter = new JPanel(cardLayout);
+				JPanel pnlCenter = new JPanel(new CardLayout());
 				pnlMain.add(pnlCenter, BorderLayout.CENTER);
 				pnlCenter.setBorder(LINE_BORDER);
 				{
 
-					productsPage = new productsPage();
-					pnlCenter.add(productsPage, "products");
-					customersPage = new customersPage();
-					pnlCenter.add(customersPage, "customers");
+					
+//					customersPage = new customersPage();
+//					pnlCenter.add(customersPage, "customersPage");
 				}
 			}
 			{
@@ -118,23 +115,23 @@ public class dashboard extends JFrame implements ActionListener {
 					
 					btnProducts = new JButton("PRODUCTS");
 					pnlLineStart.add(btnProducts);
-					btnProducts.setActionCommand("products");
-					btnProducts.addActionListener(this);
+					btnHome.setActionCommand("products");
+					btnHome.addActionListener(this);
 					
 					btnCustomers = new JButton("CUSTOMERS");
 					pnlLineStart.add(btnCustomers);
-					btnCustomers.setActionCommand("customers");
-					btnCustomers.addActionListener(this);
+					btnHome.setActionCommand("customers");
+					btnHome.addActionListener(this);
 					
 					btnSales = new JButton("SALES");
 					pnlLineStart.add(btnSales);
-					btnSales.setActionCommand("sales");
-					btnSales.addActionListener(this);
+					btnHome.setActionCommand("sales");
+					btnHome.addActionListener(this);
 					
 					btnUsers = new JButton("USERS");
 					pnlLineStart.add(btnUsers);
-					btnUsers.setActionCommand("users");
-					btnUsers.addActionListener(this);
+					btnHome.setActionCommand("users");
+					btnHome.addActionListener(this);
 				}
 			}
 		}
@@ -152,11 +149,11 @@ public class dashboard extends JFrame implements ActionListener {
 				JPanel pnlMainSignOut = new JPanel(new BorderLayout(3,3));
 				frameSignOut.add(pnlMainSignOut, BorderLayout.CENTER);
 				{
-					JPanel pnlSignOutCenter = new JPanel(new BorderLayout(3, 3));
-					pnlMainSignOut.add(pnlSignOutCenter, BorderLayout.CENTER);
+					pnlCenter = new JPanel(new BorderLayout(3, 3));
+					pnlMainSignOut.add(pnlCenter, BorderLayout.CENTER);
 					{
 						lblAreYouSure = new JLabel("Are you sure you want to sign out?", SwingConstants.CENTER);
-						pnlMainSignOut.add(lblAreYouSure, BorderLayout.CENTER);
+						pnlCenter.add(lblAreYouSure, BorderLayout.CENTER);
 						lblAreYouSure.setFont(new Font("Arial", Font.PLAIN, 15));
 					}
 				}
@@ -200,8 +197,12 @@ public class dashboard extends JFrame implements ActionListener {
 			break;
 			
 		case "products":
+			productsPage = new productsPage();
+			pnlCenter.add(productsPage, "productsPage");
+			break;
+			
 		case "customers":
-			cardLayout.show(pnlCenter, actionCommand);
+			pnlCenter.add(customersPage);
 			break;
 		
 		default:

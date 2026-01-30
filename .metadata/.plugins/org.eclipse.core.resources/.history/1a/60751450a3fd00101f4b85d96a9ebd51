@@ -1,0 +1,36 @@
+package josh;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class productsPage extends JPanel implements ActionListener {
+
+	private JPanel pnlMain;
+	private JLabel lblProducts;
+	private JLabel lblSearch;
+	private JTextField txtFieldSearch;
+	private JButton btnRefresh;
+	
+	productsPage() {
+		initGUI();
+	}
+	
+	public void initGUI() {
+		setVisible(false);
+		setLayout(new BorderLayout());
+		{
+			pnlMain = new JPane(new BorderLayout(3, 3));
+		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}

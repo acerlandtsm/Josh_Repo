@@ -1,0 +1,19 @@
+package josh;
+
+import java.awt.event.ActionEvent;
+
+public class productsPage extends JPanel implements ActionListener {
+
+	productsPage() {
+		initGUI();
+	}
+	
+	public void initGUI() {
+		setVisible(false);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}

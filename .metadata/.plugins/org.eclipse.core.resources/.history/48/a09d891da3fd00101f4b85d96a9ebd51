@@ -1,0 +1,27 @@
+package josh;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class productsPage extends JPanel implements ActionListener {
+
+	private JPanel pnlMain;
+	private JLabel lblProducts;
+	private JLabel lblSearch;
+	
+	productsPage() {
+		initGUI();
+	}
+	
+	public void initGUI() {
+		setVisible(false);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
