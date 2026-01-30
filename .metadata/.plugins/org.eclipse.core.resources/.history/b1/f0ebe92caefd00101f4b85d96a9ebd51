@@ -15,7 +15,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -139,6 +138,45 @@ public class dashboard extends JFrame implements ActionListener {
 				}
 			}
 		}
+		
+//		{
+//			frameSignOut = new JFrame();
+//			frameSignOut.setVisible(false);
+//			frameSignOut.setResizable(false);
+//			frameSignOut.setTitle("");
+//			frameSignOut.setSize(400, 200);
+//			frameSignOut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			frameSignOut.setLocationRelativeTo(null);
+//			frameSignOut.setLayout(new BorderLayout());
+//			{
+//				JPanel pnlMainSignOut = new JPanel(new BorderLayout(3,3));
+//				frameSignOut.add(pnlMainSignOut, BorderLayout.CENTER);
+//				{
+//					JPanel pnlSignOutCenter = new JPanel(new BorderLayout(3, 3));
+//					pnlMainSignOut.add(pnlSignOutCenter, BorderLayout.CENTER);
+//					{
+//						lblAreYouSure = new JLabel("Are you sure you want to sign out?", SwingConstants.CENTER);
+//						pnlMainSignOut.add(lblAreYouSure, BorderLayout.CENTER);
+//						lblAreYouSure.setFont(new Font("Arial", Font.PLAIN, 15));
+//					}
+//				}
+//				{
+//					JPanel pnlSouth = new JPanel(new FlowLayout());
+//					pnlMainSignOut.add(pnlSouth, BorderLayout.SOUTH);
+//					{
+//						btnYes = new JButton("Yes");
+//						pnlSouth.add(btnYes);
+//						btnYes.setActionCommand("yes");
+//						btnYes.addActionListener(this);
+//						
+//						btnNo = new JButton("No");
+//						pnlSouth.add(btnNo);
+//						btnNo.setActionCommand("no");
+//						btnNo.addActionListener(this);
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	@Override
@@ -147,15 +185,20 @@ public class dashboard extends JFrame implements ActionListener {
 		
 		switch (actionCommand) {
 		case "sign out":
-			int choice = JOptionPane.showConfirmDialog(null, "Do you want to sign out?", "Confirmation", JOptionPane.YES_NO_OPTION);
-				if (choice == JOptionPane.YES_OPTION) {
-					JOptionPane.showMessageDialog(null, "You have successfully signed out.");
-					loginPage = new loginPage();
-					loginPage.setVisible(true);
-					this.dispose();
-				} 			
+			frameSignOut.setVisible(true);
 			break;
 
+		case "yes":
+			frameSignOut.setVisible(false);
+			loginPage = new loginPage();
+			loginPage.setVisible(true);
+			this.dispose();
+			break;
+		
+		case "no":
+			frameSignOut.setVisible(false);
+			break;
+			
 		case "products":
 		case "customers":
 			cardLayout.show(pnlCenter, actionCommand);
