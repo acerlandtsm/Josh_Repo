@@ -1,4 +1,4 @@
-package database;
+/*package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,11 +6,12 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	
-	static final String URL = "jdbc:postgresql://192.168.150.73/josh_test_db";
-	static final String USER = "jhisidro";
-	static final String PASSWORD = "jhisidro";
+	static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	static final String USER = "postgres";
+	static final String PASSWORD = "password";
 			
 	public static Connection getConnection() throws SQLException {
 		return  DriverManager.getConnection(URL, USER, PASSWORD);
 	}
 }
+*/

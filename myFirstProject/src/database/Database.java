@@ -1,4 +1,4 @@
-/*package database;
+package database;
 
 import database.DBConnection;
 
@@ -9,28 +9,18 @@ import java.sql.Statement;
 
 public class Database {
 	
-	static final String DB_NAME = "users_db";
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/" + DB_NAME;
+//	static final String DB_NAME = "josh_test_db";
+//	static final String DB_URL = "jdbc:postgresql://192.168.150.73/" + DB_NAME;
 	
-	public static void main(String[] args) {
-	}
-	
-	public static boolean registerUser(String username, String password) {
-		String sql = "INSERT INTO USERS (username, password) VALUES (?, ?)";
-		
-		try (Connection conn = DBConnection.getConnection();
-				Statement stmt = conn.prepareStatement(sql)) {
-			
-			stmt.setString(1, username);
-			stmt.setString(2, password);
-			
-			int rowsInserted = stmt.executeUpdate();
-			return rowsInserted > 0;
-		
+	public void testSelectAll() {
+		try (Connection conn = DBConnection.getConnection()) {
+			System.out.println("Connection Sucess!");
 		} catch (SQLException e) {
+			System.out.println("Error executing SELECT statement:");
 			e.printStackTrace();
-			return false;
 		}
 	}
+	public static void main(String[] args) {
+
+	}
 }
-*/

@@ -3,7 +3,6 @@ package josh;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
@@ -17,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -30,10 +28,8 @@ public class dashboard extends JFrame implements ActionListener {
 	private JPanel pnlMain;
 	private JPanel pnlCenter;
 	private CardLayout cardLayout;
-	private JFrame frameSignOut;
 	
 	private JLabel lblUsername;
-	private JLabel lblAreYouSure;
 	private String username = "namespaceUser";
 	
 	private JButton btnSignout;
@@ -42,9 +38,6 @@ public class dashboard extends JFrame implements ActionListener {
 	private JButton btnCustomers;
 	private JButton btnSales;
 	private JButton btnUsers;
-	
-	private JButton btnYes;
-	private JButton btnNo;
 	
 	private loginPage loginPage;
 	private productsPage productsPage;
@@ -155,7 +148,6 @@ public class dashboard extends JFrame implements ActionListener {
 					this.dispose();
 				} 			
 			break;
-
 		case "products":
 		case "customers":
 			cardLayout.show(pnlCenter, actionCommand);

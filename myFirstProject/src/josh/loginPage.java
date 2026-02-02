@@ -1,5 +1,7 @@
 package josh;
 
+import database.DBConnection;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -8,11 +10,16 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -94,7 +101,6 @@ public class loginPage extends JFrame implements ActionListener {
 					
 					passFieldPassword = new JPasswordField();
 					pnlCenter.add(passFieldPassword);
-					
 				}
 			}
 			{//SOUTH PANEL
@@ -121,9 +127,35 @@ public class loginPage extends JFrame implements ActionListener {
 		
 		switch (actionCommand) {
 		case "login":
-			dashboard = new dashboard();
-			dashboard.setVisible(true);
-			this.dispose();
+			String sql = "SELECT password FROM tbl_users WHERE username = ?";
+			
+			try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+				
+				stmt.setString(1, txtFieldUsername.getText());
+
+				try (ResultSet rs = stmt.executeQuery()) {
+					if(rs.next()) {
+						String storedPassword = rs.getString("password");
+						char[] inputPassword = passFieldPassword.getPassword();
+						
+						if (new String(inputPassword).equals(storedPassword)) {
+							dashboard = new dashboard();
+							dashboard.setVisible(true);
+							this.dispose();
+							break;
+						} else {
+							JOptionPane.showMessageDialog(null, "Invalid Password.");
+						}
+						
+						java.util.Arrays.fill(inputPassword, '0');
+					} else {
+						JOptionPane.showMessageDialog(null, "Username not found.");
+					}
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
 			break;
 		case "cancel":
 			MainFrame = new MainFrame();
