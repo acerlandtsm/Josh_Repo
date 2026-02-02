@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.desktop.UserSessionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -20,7 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -47,9 +45,6 @@ public class loginPage extends JFrame implements ActionListener {
 	private JButton btnLogin;
 	private JButton btnCancel;
 	
-	private String username;
-	private String role;
-	
 	public loginPage() throws HeadlessException {
 		initGUI();
 	}
@@ -65,6 +60,7 @@ public class loginPage extends JFrame implements ActionListener {
 	public loginPage(String title, GraphicsConfiguration gc) {
 		super(title, gc);
 	}
+	
 	//INITIALIZE GUI
 	public void initGUI() {
 		setResizable(false);
@@ -128,28 +124,37 @@ public class loginPage extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		
-		//SWITCH ACTION COMMAND
 		switch (actionCommand) {
-		
 		case "login":
-			String user = txtFieldUsername.getText();
-			char[] pass = passFieldPassword.getPassword();
-			if (userSession.login(user, pass)) {
-				dashboard = new dashboard();
-				dashboard.setVisible(true);
-				this.dispose();
-				break;	
-			} else {
-				JOptionPane.showMessageDialog(null, "Invalid Username or Password.");
+			try (Connection conn = DBConnection.getConnection()) {
+				if (conn != null) {
+					
+					String inputUsername = txtFieldUsername.getText();
+					char[] inputPassword = passFieldPassword.getPassword();
+					String passwordString = new String(inputPassword);
+					
+					String sql = "SELECT * password FROM tbl_users WHERE username = ?";
+					PreparedStatement stmt = conn.prepareStatement(sql);
+					ResultSet rs = stmt.executeQuery();
+					System.out.println("DATA FROM DATABSE");
+					while (rs.next()) {
+						System.out.println(rs.getString("username"));
+						System.out.println(rs.getString("password"));
+					}
+				}
+			} catch (SQLException ex) {
+				System.out.println("Error executing SELECT statement:");
+				ex.printStackTrace();
 			}
+			dashboard = new dashboard();
+			dashboard.setVisible(true);
+			this.dispose();
 			break;
-			
 		case "cancel":
 			MainFrame = new MainFrame();
 			MainFrame.setVisible(true);
 			this.dispose();
 			break;
-			
 		default:
 			System.out.println("Please Try Again.");
 		}

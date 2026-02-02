@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.desktop.UserSessionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -60,6 +61,8 @@ public class dashboard extends JFrame implements ActionListener {
 		
 	} 
 	
+	
+	
 	public void initGUI() {
 		setResizable(false);
 		setTitle("Dashboard");
@@ -77,7 +80,9 @@ public class dashboard extends JFrame implements ActionListener {
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(LINE_BORDER);
 				{
-					lblUsername = new JLabel("User: " + username);
+					String currentUser = userSession.getUsername();
+					String currentRole = userSession.getRole();
+					lblUsername = new JLabel("Welcome back " + currentRole + " " + currentUser);
 					pnlNorth.add(lblUsername, BorderLayout.LINE_START);
 					lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
 					
