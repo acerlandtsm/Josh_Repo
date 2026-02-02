@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import database.DBConnection;
 
 public class userSession {
@@ -38,6 +40,43 @@ public class userSession {
 		}
 		return false;
 	} 
+	
+	public static Boolean accountChecker(String user, char[] pass, char[] confirmPass) {
+		String passString = new String(pass);
+		String confirmPassString = new String(confirmPass);
+		
+		if (!user.isEmpty() && !passString.isEmpty() && !confirmPassString.isEmpty()) {
+			if (passString.equals(confirmPassString)) {
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Password doesn't match.");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Username or Passwords cannot be empty!");
+		}
+		return false;
+	}
+	
+	public static Boolean signup(String user, char[] inputPass) {
+		String sql = "INSERT INTO tbl_users (username, password) VALUES (?, ?)";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			String pass = new String(inputPass);
+			stmt.setString(1, user);
+			stmt.setString(2, pass);
+			
+			int rowsInserted = stmt.executeUpdate();
+			return rowsInserted > 0;
+		}catch (SQLException ex) {
+			if (ex.getSQLState().equals("23505")) {
+				JOptionPane.showMessageDialog(null, "Username is already taken.");
+	        } else {
+	             ex.printStackTrace();
+	        }
+		return false;
+		}
+	}
 	
 	//GETTERS
 	public static String getUsername() { return currentUsername; }

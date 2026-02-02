@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -129,9 +130,18 @@ public class signupPage extends JFrame implements ActionListener {
 		
 		switch (actionCommand) {
 		case "signup":
-			MainFrame = new MainFrame();
-			MainFrame.setVisible(true);
-			this.dispose();		
+			String user = txtFieldUsername.getText();
+			char[] pass = passFieldPassword.getPassword();
+			char[] confirmPass = passFieldConfirmPassword.getPassword();
+			if (userSession.accountChecker(user, pass, confirmPass)) {
+				if (userSession.signup(user, pass)) {
+					JOptionPane.showMessageDialog(null, "Signed up successfully, please log in");
+					MainFrame = new MainFrame();
+					MainFrame.setVisible(true);
+					this.dispose();		
+					break;
+				}
+			}
 			break;
 		case "cancel":
 			MainFrame = new MainFrame();

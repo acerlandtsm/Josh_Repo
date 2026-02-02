@@ -47,9 +47,6 @@ public class loginPage extends JFrame implements ActionListener {
 	private JButton btnLogin;
 	private JButton btnCancel;
 	
-	private String username;
-	private String role;
-	
 	public loginPage() throws HeadlessException {
 		initGUI();
 	}
