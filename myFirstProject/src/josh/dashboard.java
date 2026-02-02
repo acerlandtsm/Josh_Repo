@@ -30,9 +30,7 @@ public class dashboard extends JFrame implements ActionListener {
 	private JPanel pnlCenter;
 	private CardLayout cardLayout;
 	
-	private JLabel lblUsername;
-	private String username = "namespaceUser";
-	
+	private JLabel lblUsername;	
 	private JButton btnSignout;
 	private JButton btnHome;
 	private JButton btnProducts;
@@ -78,7 +76,7 @@ public class dashboard extends JFrame implements ActionListener {
 			{
 				JPanel pnlNorth = new JPanel(new BorderLayout(3, 3));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(LINE_BORDER);
+				pnlNorth.setBorder(new EmptyBorder(15, 15, 15, 15));
 				{
 					String currentUser = userSession.getUsername();
 					String currentRole = userSession.getRole();

@@ -1,9 +1,12 @@
 package josh;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -24,11 +27,12 @@ public class userSession {
 			
 			try (ResultSet rs = stmt.executeQuery()) {
 				if(rs.next()) {
-					String storedPassword = rs.getString("password");
+					String storedHash = rs.getString("password");
 					String storedRole = rs.getString("role");
-					String inputPassString = new String(inputPass);
+					//HASH CHECKER
+					BCrypt.Result result = BCrypt.verifyer().verify(inputPass, storedHash); 
 					
-					if (inputPassString.equals(storedPassword)) {
+					if (result.verified) {
 						currentUsername = user;
 						currentRole = storedRole;
 						return true;
@@ -41,6 +45,7 @@ public class userSession {
 		return false;
 	} 
 	
+	//CONFIRMATION LOGIC
 	public static Boolean accountChecker(String user, char[] pass, char[] confirmPass) {
 		String passString = new String(pass);
 		String confirmPassString = new String(confirmPass);
@@ -57,17 +62,24 @@ public class userSession {
 		return false;
 	}
 	
+	//INSERT INTO
 	public static Boolean signup(String user, char[] inputPass) {
+		
+		//PASSWORD HASING
+		String hashedPass = BCrypt.withDefaults().hashToString(12, inputPass);
+			
+		
 		String sql = "INSERT INTO tbl_users (username, password) VALUES (?, ?)";
 		try (Connection conn = DBConnection.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			
 			String pass = new String(inputPass);
 			stmt.setString(1, user);
-			stmt.setString(2, pass);
+			stmt.setString(2, hashedPass);
 			
 			int rowsInserted = stmt.executeUpdate();
 			return rowsInserted > 0;
+			
 		}catch (SQLException ex) {
 			if (ex.getSQLState().equals("23505")) {
 				JOptionPane.showMessageDialog(null, "Username is already taken.");
@@ -75,6 +87,8 @@ public class userSession {
 	             ex.printStackTrace();
 	        }
 		return false;
+		} finally {
+			Arrays.fill(inputPass, '0');
 		}
 	}
 	
