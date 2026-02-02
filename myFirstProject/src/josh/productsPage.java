@@ -1,6 +1,7 @@
 package josh;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,18 +10,39 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class productsPage extends JPanel implements ActionListener {
 
 	private JPanel pnlMain;
+	
 	private JLabel lblProducts;
 	private JLabel lblSearch;
 	private JLabel placeholder;
-	private JTextField txtFieldSearch;
-	private JButton btnRefresh;
+	private JLabel lblID;
+	private JLabel idNum;
+	private JLabel lblName;
+	private JLabel lblCategory;
+	private JLabel lblQuantity;
+	private JLabel lblPrice;
 	
+	private JTextField txtFieldName;
+	private JTextField txtFieldCategory;
+	private JTextField txtFieldQuantity;
+	private JTextField txtFieldPrice;
+	private JTextField txtFieldSearch;
+	
+	private JButton btnSearch;
+	private JButton btnAdd;
+	private JButton btnEdit;
+	private JButton btnRemove;
+	
+	private DefaultTableModel model;
+	private JTable tblProducts;
 	productsPage() {
 		initGUI();
 	}
@@ -33,7 +55,7 @@ public class productsPage extends JPanel implements ActionListener {
 			add(pnlMain, BorderLayout.CENTER);
 			pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
 			{
-				JPanel pnlNorth = new JPanel(new GridLayout(1,5,5,5));
+				JPanel pnlNorth = new JPanel(new BorderLayout());
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
 				{
@@ -42,26 +64,116 @@ public class productsPage extends JPanel implements ActionListener {
 						pnlNorth.add(lblProducts);
 						lblProducts.setFont(new Font("Arial", Font.BOLD, 20));
 					}
+				}
+			}
+			{
+				JPanel pnlCenter = new JPanel(new GridLayout(1,2));
+				pnlMain.add(pnlCenter, BorderLayout.CENTER);
+				pnlCenter.setBorder(new EmptyBorder(20, 20, 20, 20));
+				{
+					JPanel pnlCenterLeft = new JPanel(new GridLayout(0, 3));
+					pnlCenter.add(pnlCenterLeft);
 					{
-						placeholder = new JLabel();
-						pnlNorth.add(placeholder); // EMPTY SPACE
+						{
+							lblSearch = new JLabel("Search:");
+							pnlCenterLeft.add(lblSearch);
+						}
+						{
+							txtFieldSearch = new JTextField();
+							pnlCenterLeft.add(txtFieldSearch);
+						}
+						{
+							btnSearch = new JButton("SEARCH");
+							pnlCenterLeft.add(btnSearch);
+						}
+						{
+							lblID = new JLabel("ID");
+							pnlCenterLeft.add(lblID);
+						}
+						{
+							idNum = new JLabel("0");
+							pnlCenterLeft.add(idNum);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							lblName = new JLabel("NAME: ");
+							pnlCenterLeft.add(lblName);
+						}
+						{
+							txtFieldName = new JTextField();
+							pnlCenterLeft.add(txtFieldName);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							lblCategory = new JLabel("CATEGORY: ");
+							pnlCenterLeft.add(lblCategory);
+						}
+						{
+							txtFieldCategory = new JTextField();
+							pnlCenterLeft.add(txtFieldCategory);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							lblQuantity = new JLabel("QUANTITY: ");
+							pnlCenterLeft.add(lblQuantity);
+						}
+						{
+							txtFieldQuantity = new JTextField();
+							pnlCenterLeft.add(txtFieldQuantity);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							lblPrice = new JLabel("PRICE: ");
+							pnlCenterLeft.add(lblPrice);
+						}
+						{
+							txtFieldPrice = new JTextField();
+							pnlCenterLeft.add(txtFieldPrice);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+							placeholder = new JLabel();
+							pnlCenterLeft.add(placeholder);
+						}
+						{
+							btnAdd = new JButton("Add");
+							pnlCenterLeft.add(btnAdd);
+						}
+						{
+							btnEdit = new JButton("Edit");
+							pnlCenterLeft.add(btnEdit);
+						}
+						{
+							btnRemove = new JButton("Remove");
+							pnlCenterLeft.add(btnRemove);
+						}
 					}
+					JPanel pnlCenterRight = new JPanel(new BorderLayout());
+					pnlCenter.add(pnlCenterRight);
 					{
-						lblSearch = new JLabel("Search: ");
-						pnlNorth.add(lblSearch);
-						lblProducts.setFont(new Font("ARIAL", Font.PLAIN, 15));
+//						model = new DefaultTableModel(columns, 0);
+//						tblProducts = new JTable(model); 
+//						JScrollPane scrollPane = new JScrollPane(tblProducts);
 					}
-					{
-						txtFieldSearch = new JTextField();
-						pnlNorth.add(txtFieldSearch);
-					}
-					{
-						btnRefresh = new JButton("REFRESH");
-						pnlNorth.add(btnRefresh);
-						btnRefresh.setFont(new Font("ARIAL", Font.BOLD, 15));
-					}
-					
-					
 				}
 			}
 		}
