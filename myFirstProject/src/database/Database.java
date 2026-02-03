@@ -1,26 +1,41 @@
-//package database;
-//
-//import database.DBConnection;
-//
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.SQLException;
-//import java.sql.Statement;
-//
-//public class Database {
-//	
-////	static final String DB_NAME = "josh_test_db";
-////	static final String DB_URL = "jdbc:postgresql://192.168.150.73/" + DB_NAME;
-//	
-//	public void testSelectAll() {
-//		try (Connection conn = DBConnection.getConnection()) {
-//			System.out.println("Connection Sucess!");
-//		} catch (SQLException e) {
-//			System.out.println("Error executing SELECT statement:");
-//			e.printStackTrace();
-//		}
-//	}
-//	public static void main(String[] args) {
-//
-//	}
-//}
+package database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public class Database {
+	
+	//SELECT * PRODUCTS
+	public void selectAllProducts(DefaultTableModel model) {
+		
+		model.setRowCount(0);
+		
+		String selectAll = "SELECT * FROM tbl_products";
+		
+		try	{	Connection conn = DBConnection.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(selectAll);
+				
+				while (rs.next()) {
+					String product_id = rs.getString("product_id");
+					String name = rs.getString("name");
+					String category = rs.getString("category");
+					String quantity = rs.getString("quantity");
+					String price = rs.getString("price");
+					
+					model.addRow(new String[] {product_id, name, category, quantity, price});
+				}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error, fetching data: " + e.getMessage());
+		}
+	}
+}

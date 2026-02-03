@@ -6,15 +6,22 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import database.DBConnection;
+import database.Database;
 
 public class productsPage extends JPanel implements ActionListener {
 
@@ -41,6 +48,7 @@ public class productsPage extends JPanel implements ActionListener {
 	private JButton btnEdit;
 	private JButton btnRemove;
 	
+	private JScrollPane scrollPane;
 	private DefaultTableModel model;
 	private JTable tblProducts;
 	productsPage() {
@@ -69,7 +77,7 @@ public class productsPage extends JPanel implements ActionListener {
 			{
 				JPanel pnlCenter = new JPanel(new GridLayout(1,2));
 				pnlMain.add(pnlCenter, BorderLayout.CENTER);
-				pnlCenter.setBorder(new EmptyBorder(20, 20, 20, 20));
+				pnlCenter.setBorder(new EmptyBorder(70, 70, 70, 70));
 				{
 					JPanel pnlCenterLeft = new JPanel(new GridLayout(0, 3));
 					pnlCenter.add(pnlCenterLeft);
@@ -170,9 +178,15 @@ public class productsPage extends JPanel implements ActionListener {
 					JPanel pnlCenterRight = new JPanel(new BorderLayout());
 					pnlCenter.add(pnlCenterRight);
 					{
-//						model = new DefaultTableModel(columns, 0);
-//						tblProducts = new JTable(model); 
-//						JScrollPane scrollPane = new JScrollPane(tblProducts);
+						String[] columnNames = {"ID", "NAME", "CATEGORY", "QUANTITY", "PRICE"};
+						Database db = new Database();
+						model = new DefaultTableModel(columnNames, 0);
+						db.selectAllProducts(model);
+						tblProducts = new JTable(model);
+
+						scrollPane = new JScrollPane(tblProducts);
+						pnlCenterRight.add(scrollPane, BorderLayout.CENTER); 
+						scrollPane.setBounds(30, 40, 200, 300);
 					}
 				}
 			}
