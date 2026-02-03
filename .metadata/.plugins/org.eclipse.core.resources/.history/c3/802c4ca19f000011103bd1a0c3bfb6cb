@@ -1,8 +1,8 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +16,8 @@ public class Database {
 		
 		String selectAll = "SELECT * FROM tbl_products";
 		
-		try	{	Connection conn = DBConnection.getConnection();
-				Statement stmt = conn.createStatement();
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(selectAll)) {
 				ResultSet rs = stmt.executeQuery(selectAll);
 				
 				while (rs.next()) {

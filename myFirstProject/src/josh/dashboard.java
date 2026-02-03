@@ -19,12 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 public class dashboard extends JFrame implements ActionListener {
 	
 	//VARIABLES
-	private Border LINE_BORDER = BorderFactory.createLineBorder(Color.BLACK);
+	private Border outerBorder = BorderFactory.createLineBorder(Color.GRAY);
+	private Border innerBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 	
 	private JPanel pnlMain;
 	private JPanel pnlCenter;
@@ -59,12 +61,10 @@ public class dashboard extends JFrame implements ActionListener {
 		
 	} 
 	
-	
-	
 	public void initGUI() {
 		setResizable(false);
 		setTitle("Dashboard");
-		setSize(1280, 720);
+		setSize(960, 540);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
@@ -72,11 +72,11 @@ public class dashboard extends JFrame implements ActionListener {
 			pnlMain = new JPanel(new BorderLayout(3,3));
 			add(pnlMain, BorderLayout.CENTER);
 			pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
-			pnlMain.setBorder(LINE_BORDER);
+			pnlMain.setBorder(outerBorder);
 			{
 				JPanel pnlNorth = new JPanel(new BorderLayout(3, 3));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(new EmptyBorder(15, 15, 15, 15));
+				pnlNorth.setBorder(new CompoundBorder(outerBorder, innerBorder));
 				{
 					String currentUser = userSession.getUsername();
 					String currentRole = userSession.getRole();
@@ -91,10 +91,10 @@ public class dashboard extends JFrame implements ActionListener {
 				} 
 			}
 			{
-				cardLayout = new CardLayout();
+				cardLayout = new CardLayout();	
 				pnlCenter = new JPanel(cardLayout);
 				pnlMain.add(pnlCenter, BorderLayout.CENTER);
-				pnlCenter.setBorder(LINE_BORDER);
+				pnlCenter.setBorder(outerBorder);
 				{
 
 					productsPage = new productsPage();
@@ -106,33 +106,47 @@ public class dashboard extends JFrame implements ActionListener {
 			{
 				JPanel pnlLineStart = new JPanel(new GridLayout(6, 1, 10, 10));
 				pnlMain.add(pnlLineStart, BorderLayout.LINE_START);
-				pnlLineStart.setBorder(new EmptyBorder(20, 15, 20, 15));
+				pnlLineStart.setBorder(new EmptyBorder(100, 15, 20, 15));
 				{
-					btnHome = new JButton("HOME");
-					pnlLineStart.add(btnHome);
-					btnHome.setActionCommand("home");
-					btnHome.addActionListener(this);
-					
-					btnProducts = new JButton("PRODUCTS");
-					pnlLineStart.add(btnProducts);
-					btnProducts.setActionCommand("products");
-					btnProducts.addActionListener(this);
-					
-					btnCustomers = new JButton("CUSTOMERS");
-					pnlLineStart.add(btnCustomers);
-					btnCustomers.setActionCommand("customers");
-					btnCustomers.addActionListener(this);
-					
-					btnSales = new JButton("SALES");
-					pnlLineStart.add(btnSales);
-					btnSales.setActionCommand("sales");
-					btnSales.addActionListener(this);
-					
-					btnUsers = new JButton("USERS");
-					pnlLineStart.add(btnUsers);
-					btnUsers.setActionCommand("users");
-					btnUsers.addActionListener(this);
+					{
+						btnHome = new JButton("HOME");
+						pnlLineStart.add(btnHome);
+						btnHome.setActionCommand("home");
+						btnHome.addActionListener(this);
+					}
+					{
+						btnProducts = new JButton("PRODUCTS");
+						pnlLineStart.add(btnProducts);
+						btnProducts.setActionCommand("products");
+						btnProducts.addActionListener(this);
+					}
+					{
+						btnCustomers = new JButton("CUSTOMERS");
+						pnlLineStart.add(btnCustomers);
+						btnCustomers.setActionCommand("customers");
+						btnCustomers.addActionListener(this);
+					}
+					{
+						btnSales = new JButton("SALES");
+						pnlLineStart.add(btnSales);
+						btnSales.setActionCommand("sales");
+						btnSales.addActionListener(this);
+					}
+					{
+						btnUsers = new JButton("USERS");
+						pnlLineStart.add(btnUsers);
+						btnUsers.setActionCommand("users");
+						btnUsers.addActionListener(this);
+					}
 				}
+			}
+			{
+				JPanel pnlLineEnd = new JPanel();
+				pnlMain.add(pnlLineEnd, BorderLayout.LINE_END);
+			}
+			{
+				JPanel pnlSouth = new JPanel();
+				pnlMain.add(pnlSouth, BorderLayout.SOUTH);
 			}
 		}
 	}
