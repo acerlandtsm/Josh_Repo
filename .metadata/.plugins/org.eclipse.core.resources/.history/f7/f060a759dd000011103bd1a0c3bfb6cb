@@ -252,25 +252,6 @@ public class productsPage extends JPanel implements ActionListener {
 				Database db = new Database();
 				db.selectAllProducts(model);
 				
-				txtFieldName.setText("");
-	            txtFieldCategory.setText("");
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				txtFieldCategory.setEditable(false);
-				txtFieldCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnEdit.setFocusable(false);
-				btnEdit.setEnabled(false);
-				btnRemove.setFocusable(false);
-				btnRemove.setEnabled(false);
-				
 			} else {
 				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
 			}
