@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -35,6 +36,26 @@ public class Database {
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error, fetching data: " + e.getMessage());
+		}
+	}
+	
+	public static Boolean addProducts(String name, String category, int quantity, double price) {
+		
+		String insertInto = "INSERT INTO tbl_products (name, category, quantity, price) VALUES (?,?,?,?)";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(insertInto)) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, category);
+			stmt.setInt(3, quantity);
+			stmt.setDouble(4, price);
+			int rowsInserted = stmt.executeUpdate();
+			return rowsInserted > 0;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error ading product: " + e.getMessage());
+			return false;
 		}
 	}
 }

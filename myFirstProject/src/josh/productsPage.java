@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,22 +32,20 @@ public class productsPage extends JPanel implements ActionListener {
 	
 	
 	private JLabel lblProducts;
-	private JLabel lblSearch;
-	private JLabel placeholder;
 	private JLabel lblID;
-	private JLabel idNum;
 	private JLabel lblName;
 	private JLabel lblCategory;
 	private JLabel lblQuantity;
 	private JLabel lblPrice;
 	
+	private JTextField txtFieldID;
 	private JTextField txtFieldName;
 	private JTextField txtFieldCategory;
 	private JTextField txtFieldQuantity;
 	private JTextField txtFieldPrice;
-	private JTextField txtFieldSearch;
 	
-	private JButton btnSearch;
+	private JButton btnRefresh;
+	private JButton btnAddNew;
 	private JButton btnAdd;
 	private JButton btnEdit;
 	private JButton btnRemove;
@@ -67,15 +66,36 @@ public class productsPage extends JPanel implements ActionListener {
 			add(pnlMain, BorderLayout.CENTER);
 			pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
 			{
-				JPanel pnlNorth = new JPanel(new BorderLayout());
+				JPanel pnlNorth = new JPanel(new GridLayout(1, 2));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
 				{
 					{
-						lblProducts = new JLabel("PRODUCTS");
-						pnlNorth.add(lblProducts);
-						lblProducts.setFont(new Font("Arial", Font.BOLD, 20));
+						JPanel pnlTitle = new JPanel(new BorderLayout());
+						pnlNorth.add(pnlTitle);
+						{
+							lblProducts = new JLabel("PRODUCTS");
+							pnlTitle.add(lblProducts, BorderLayout.WEST);
+							lblProducts.setFont(new Font("Arial", Font.BOLD, 20));
+						}
 					}
+					{
+						JPanel pnlButtons = new JPanel(new BorderLayout());
+						pnlNorth.add(pnlButtons);
+						{
+							btnAddNew = new JButton("Add new");
+							pnlButtons.add(btnAddNew, BorderLayout.WEST);
+							btnAddNew.setActionCommand("addNew");
+							btnAddNew.addActionListener(this);
+						}
+						{
+							btnRefresh = new JButton("REFRESH");
+							pnlButtons.add(btnRefresh, BorderLayout.EAST);
+							btnRefresh.setActionCommand("refresh");
+							btnRefresh.addActionListener(this);
+						}
+					}
+
 				}
 			}
 			{
@@ -118,24 +138,34 @@ public class productsPage extends JPanel implements ActionListener {
 							pnlProductForm.add(pnlTxtFields, BorderLayout.CENTER);
 							pnlTxtFields.setBorder(new EmptyBorder(10, 10, 10, 10));
 							{
-								idNum = new JLabel("0");
-								pnlTxtFields.add(idNum);
+								txtFieldID = new JTextField();
+								pnlTxtFields.add(txtFieldID);
+								txtFieldID.setEditable(false);
+								txtFieldID.setFocusable(false);
 							}
 							{
 								txtFieldName = new JTextField();
 								pnlTxtFields.add(txtFieldName);
+								txtFieldName.setEditable(false);
+								txtFieldName.setFocusable(false);
 							}
 							{
 								txtFieldCategory = new JTextField();
 								pnlTxtFields.add(txtFieldCategory);
+								txtFieldCategory.setEditable(false);
+								txtFieldCategory.setFocusable(false);
 							}
 							{
 								txtFieldQuantity = new JTextField();
 								pnlTxtFields.add(txtFieldQuantity);
+								txtFieldQuantity.setEditable(false);
+								txtFieldQuantity.setFocusable(false);
 							}
 							{
 								txtFieldPrice = new JTextField();
 								pnlTxtFields.add(txtFieldPrice);
+								txtFieldPrice.setEditable(false);
+								txtFieldPrice.setFocusable(false);
 							}
 						}
 						{
@@ -145,14 +175,26 @@ public class productsPage extends JPanel implements ActionListener {
 							{
 								btnAdd = new JButton("Add");
 								pnlButtons.add(btnAdd);
+								btnAdd.setActionCommand("add");
+								btnAdd.addActionListener(this);
+								btnAdd.setFocusable(false);
+								btnAdd.setEnabled(false);
 							}
 							{
 								btnEdit = new JButton("Edit");
 								pnlButtons.add(btnEdit);
+								btnEdit.setActionCommand("edit");
+								btnEdit.addActionListener(this);
+								btnEdit.setFocusable(false);
+								btnEdit.setEnabled(false);
 							}
 							{
 								btnRemove = new JButton("Remove");
 								pnlButtons.add(btnRemove);
+								btnRemove.setActionCommand("remove");
+								btnRemove.addActionListener(this);
+								btnRemove.setFocusable(false);
+								btnRemove.setEnabled(false);
 							}
 						}
 					}
@@ -166,8 +208,9 @@ public class productsPage extends JPanel implements ActionListener {
 					model = new DefaultTableModel(columnNames, 0);
 					db.selectAllProducts(model);
 					tblProducts = new JTable(model);
-					tblProducts.getColumnModel().getColumn(0).setPreferredWidth(10);
+					tblProducts.getColumnModel().getColumn(0).setPreferredWidth(30);
 					tblProducts.getColumnModel().getColumn(1).setPreferredWidth(150);
+					tblProducts.getColumnModel().getColumn(2).setPreferredWidth(90);
 					scrollPane = new JScrollPane(tblProducts);
 					pnlCenter.add(scrollPane, BorderLayout.CENTER); 
 					scrollPane.setBounds(30, 40, 200, 300);
@@ -177,7 +220,54 @@ public class productsPage extends JPanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		String actionCommand = e.getActionCommand();
 		
+		switch (actionCommand) {
+		case "addNew":
+			txtFieldName.setEditable(true);
+			txtFieldName.setFocusable(true);
+			txtFieldCategory.setEditable(true);
+			txtFieldCategory.setFocusable(true);
+			txtFieldQuantity.setEditable(true);
+			txtFieldQuantity.setFocusable(true);
+			txtFieldPrice.setEditable(true);
+			txtFieldPrice.setFocusable(true);
+			btnAdd.setFocusable(true);
+			btnAdd.setEnabled(true);
+			btnEdit.setFocusable(true);
+			btnEdit.setEnabled(true);
+			btnRemove.setFocusable(true);
+			btnRemove.setEnabled(true);
+			break;
+		
+		case "add":
+			String name = txtFieldName.getText();
+			String category = txtFieldCategory.getText();
+			int quantity = Integer.parseInt(txtFieldQuantity.getText());
+			double price = Double.parseDouble(txtFieldPrice.getText());
+			
+			if (Database.addProducts(name, category, quantity, price)) {
+				
+				JOptionPane.showMessageDialog(null, "Product Added Successfully!");
+				Database db = new Database();
+				db.selectAllProducts(model);
+				
+				txtFieldName.setText("");
+	            txtFieldCategory.setText("");
+	            txtFieldQuantity.setText("");
+	            txtFieldPrice.setText("");
+				
+			} else {
+				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
+			}
+			break;
+		case "edit":
+			
+			break;
+			
+		case "remove":
+			
+			break;
+		}
 	}
 }

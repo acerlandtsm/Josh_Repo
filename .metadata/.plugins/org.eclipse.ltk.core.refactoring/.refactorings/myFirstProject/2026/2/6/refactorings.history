@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;pnlCenterRight&apos; in &apos;josh.productsPage.initGUI()&apos; to &apos;pnlCenter&apos;&#x0A;- Original project: &apos;myFirstProject&apos;&#x0A;- Original element: &apos;josh.productsPage.initGUI().pnlCenterRight&apos;&#x0A;- Renamed element: &apos;pnlCenterRight&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;pnlCenterRight&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;josh{productsPage.java[productsPage~initGUI@pnlCenterRight!5077!5131!5084!5097!QJPanel;!0!false" name="pnlCenter" references="true" stamp="1770101694223" version="1.0"/>
+</session>

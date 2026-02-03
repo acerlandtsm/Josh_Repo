@@ -1,0 +1,232 @@
+package josh;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import database.DBConnection;
+import database.Database;
+
+public class productsPage extends JPanel implements ActionListener {
+
+	private JPanel pnlMain;
+	
+	private Border LINE_BORDER = BorderFactory.createLineBorder(Color.GRAY);
+	
+	private JLabel lblProducts;
+	private JLabel lblSearch;
+	private JLabel placeholder;
+	private JLabel lblID;
+	private JLabel idNum;
+	private JLabel lblName;
+	private JLabel lblCategory;
+	private JLabel lblQuantity;
+	private JLabel lblPrice;
+	
+	private JTextField txtFieldName;
+	private JTextField txtFieldCategory;
+	private JTextField txtFieldQuantity;
+	private JTextField txtFieldPrice;
+	private JTextField txtFieldSearch;
+	
+	private JButton btnSearch;
+	private JButton btnAdd;
+	private JButton btnEdit;
+	private JButton btnRemove;
+	
+	private JScrollPane scrollPane;
+	private DefaultTableModel model;
+	private JTable tblProducts;
+	productsPage() {
+		initGUI();
+	}
+	
+	public void initGUI() {
+		setVisible(false);
+		setLayout(new BorderLayout());
+		{
+			pnlMain = new JPanel(new BorderLayout(3, 3));
+			add(pnlMain, BorderLayout.CENTER);
+			pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
+			{
+				JPanel pnlNorth = new JPanel(new BorderLayout());
+				pnlMain.add(pnlNorth, BorderLayout.NORTH);
+				pnlNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
+				{
+					{
+						lblProducts = new JLabel("PRODUCTS");
+						pnlNorth.add(lblProducts);
+						lblProducts.setFont(new Font("Arial", Font.BOLD, 20));
+					}
+				}
+			}
+			{
+				JPanel pnlCenter = new JPanel(new GridLayout(1,2));
+				pnlMain.add(pnlCenter, BorderLayout.CENTER);
+				pnlCenter.setBorder(new EmptyBorder(10, 10, 10, 10));
+				{
+					JPanel pnlCenterLeft = new JPanel(new BorderLayout());
+					pnlCenter.add(pnlCenterLeft);
+					pnlCenterLeft.setBorder(LINE_BORDER);
+					{
+						{
+							JPanel pnlSearch = new JPanel(new BorderLayout());
+							pnlCenterLeft.add(pnlSearch, BorderLayout.NORTH);
+							pnlSearch.setBorder(new EmptyBorder(10, 10, 10, 10));
+							{
+								lblSearch = new JLabel("Search:  ");
+								pnlSearch.add(lblSearch, BorderLayout.WEST);
+							}
+							{
+								txtFieldSearch = new JTextField(15);
+								pnlSearch.add(txtFieldSearch, BorderLayout.CENTER);
+							}
+							{
+								btnSearch = new JButton("SEARCH");
+								pnlSearch.add(btnSearch, BorderLayout.EAST);
+							}
+						}
+						{
+							JPanel pnlTxtFields = new JPanel(new GridLayout(0, 1));
+							pnlCenterLeft.add(pnlTxtFields, BorderLayout.CENTER);
+							pnlTxtFields.setBorder(new EmptyBorder(10, 10, 10, 10));
+							{
+								JPanel pnlID = new JPanel (new BorderLayout());
+								pnlTxtFields.add(pnlID);
+								pnlID.setBorder(new EmptyBorder(10, 10, 10, 10));
+								{
+									lblID = new JLabel("PRODUCT ID: ");
+									pnlID.add(lblID, BorderLayout.WEST);
+								}
+								{
+									idNum = new JLabel("0");
+									pnlID.add(idNum, BorderLayout.CENTER);
+								}
+							}
+							{
+								JPanel pnlName = new JPanel (new BorderLayout());
+								pnlTxtFields.add(pnlName);
+								{
+									lblName = new JLabel("NAME: ");
+									pnlName.add(lblName, BorderLayout.WEST);
+								}
+								{
+									txtFieldName = new JTextField(15);
+									pnlName.add(txtFieldName, BorderLayout.CENTER);
+								}
+								{
+									placeholder = new JLabel("");
+									pnlName.add(placeholder, BorderLayout.EAST);
+								}
+							}
+							{
+								JPanel pnlCategory = new JPanel (new BorderLayout());
+								pnlTxtFields.add(pnlCategory);
+								{
+									lblCategory = new JLabel("CATEGORY: ");
+									pnlCategory.add(lblCategory);
+								}
+								{
+									txtFieldCategory = new JTextField();
+									pnlCategory.add(txtFieldCategory, BorderLayout.WEST);
+								}
+								{
+									placeholder = new JLabel("");
+									pnlCategory.add(placeholder, BorderLayout.CENTER);
+								}
+							}
+							{
+								JPanel pnlQuantity = new JPanel (new BorderLayout());
+								pnlTxtFields.add(pnlQuantity);
+								{
+									lblQuantity = new JLabel("QUANTITY: ");
+									pnlQuantity.add(lblQuantity);
+								}
+								{
+									txtFieldQuantity = new JTextField();
+									pnlQuantity.add(txtFieldQuantity, BorderLayout.WEST);
+								}
+								{
+									placeholder = new JLabel("");
+									pnlQuantity.add(placeholder, BorderLayout.CENTER);
+								}
+							}
+							{
+								JPanel pnlPrice = new JPanel (new BorderLayout());
+								pnlTxtFields.add(pnlPrice);
+								{
+									lblPrice = new JLabel("PRICE: ");
+									pnlPrice.add(lblPrice);
+								}
+								{
+									txtFieldPrice = new JTextField();
+									pnlPrice.add(txtFieldPrice, BorderLayout.WEST);
+								}
+								{
+									placeholder = new JLabel("");
+									pnlPrice.add(placeholder, BorderLayout.CENTER);
+								}
+							}
+						}
+						
+						
+						
+						
+						
+//						{
+//							btnAdd = new JButton("Add");
+//							pnlCenterLeft.add(btnAdd);
+//						}
+//						{
+//							btnEdit = new JButton("Edit");
+//							pnlCenterLeft.add(btnEdit);
+//						}
+//						{
+//							btnRemove = new JButton("Remove");
+//							pnlCenterLeft.add(btnRemove);
+//						}
+					}
+					JPanel pnlCenterRight = new JPanel(new BorderLayout());
+					pnlCenter.add(pnlCenterRight);
+					{
+						String[] columnNames = {"ID", "NAME", "CATEGORY", "QUANTITY", "PRICE"};
+						Database db = new Database();
+						model = new DefaultTableModel(columnNames, 0);
+						db.selectAllProducts(model);
+						tblProducts = new JTable(model);
+						tblProducts.getColumnModel().getColumn(0).setPreferredWidth(10);
+						tblProducts.getColumnModel().getColumn(1).setPreferredWidth(150);
+						scrollPane = new JScrollPane(tblProducts);
+						pnlCenterRight.add(scrollPane, BorderLayout.CENTER); 
+						scrollPane.setBounds(30, 40, 200, 300);
+					}
+				}
+			}
+		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
