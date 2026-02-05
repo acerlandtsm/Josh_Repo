@@ -19,8 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import database.Database;
@@ -48,9 +46,8 @@ public class productsPage extends JPanel implements ActionListener {
 	
 	private JButton btnRefresh;
 	private JButton btnAddNew;
-	private JButton btnCancel;
 	private JButton btnAdd;
-	private JButton btnUpdate;
+	private JButton btnEdit;
 	private JButton btnRemove;
 	
 	private JScrollPane scrollPane;
@@ -83,24 +80,24 @@ public class productsPage extends JPanel implements ActionListener {
 						}
 					}
 					{
-						JPanel pnlButtons = new JPanel(new GridLayout(1,3));
+						JPanel pnlButtons = new JPanel(new GridLayout(1,4));
 						pnlNorth.add(pnlButtons);
 						{
 							btnAddNew = new JButton("Add new");
-							pnlButtons.add(btnAddNew);
+							pnlButtons.add(btnAddNew, BorderLayout.WEST);
 							btnAddNew.setActionCommand("addNew");
 							btnAddNew.addActionListener(this);
 						}
 						{
-							btnCancel = new JButton("Cancel");
-							pnlButtons.add(btnCancel);
-							btnCancel.setActionCommand("cancel");
+							JButton btnCancel = new JButton("Cancel");
+							pnlButtons.add(btnCancel, BorderLayout.WEST);
+							btnCancel.setVisible(false);
+							btnCancel.setActionCommand("addNew");
 							btnCancel.addActionListener(this);
-							btnCancel.setEnabled(false);
 						}
 						{
-							btnRefresh = new JButton("Refresh");
-							pnlButtons.add(btnRefresh);
+							btnRefresh = new JButton("REFRESH");
+							pnlButtons.add(btnRefresh, BorderLayout.EAST);
 							btnRefresh.setActionCommand("refresh");
 							btnRefresh.addActionListener(this);
 						}
@@ -187,40 +184,33 @@ public class productsPage extends JPanel implements ActionListener {
 								pnlButtons.add(btnAdd);
 								btnAdd.setActionCommand("add");
 								btnAdd.addActionListener(this);
-								btnAdd.setEnabled(false);
+								btnAdd.setVisible(false);
 							}
 							{
-								btnUpdate = new JButton("Update");
-								pnlButtons.add(btnUpdate);
-								btnUpdate.setActionCommand("update");
-								btnUpdate.addActionListener(this);
-								btnUpdate.setEnabled(false);
+								btnEdit = new JButton("Edit");
+								pnlButtons.add(btnEdit);
+								btnEdit.setActionCommand("edit");
+								btnEdit.addActionListener(this);
+								btnAdd.setVisible(false);
 							}
 							{
 								btnRemove = new JButton("Remove");
 								pnlButtons.add(btnRemove);
 								btnRemove.setActionCommand("remove");
 								btnRemove.addActionListener(this);
+								btnRemove.setFocusable(false);
 								btnRemove.setEnabled(false);
 							}
 						}
 					}
 				}
-			}
-			{
 				JPanel pnlCenter = new JPanel(new BorderLayout());
 				pnlMain.add(pnlCenter);
 				pnlCenter.setBorder(new EmptyBorder(10, 10, 10, 10));
 				{
 					String[] columnNames = {"ID", "NAME", "CATEGORY", "QUANTITY", "PRICE"};
 					Database db = new Database();
-					
-					model = new DefaultTableModel(columnNames, 0) {
-						@Override
-						public boolean isCellEditable(int row, int column) {
-							return false;
-						}
-					};
+					model = new DefaultTableModel(columnNames, 0);
 					db.selectAllProducts(model);
 					tblProducts = new JTable(model);
 					tblProducts.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -229,52 +219,16 @@ public class productsPage extends JPanel implements ActionListener {
 					scrollPane = new JScrollPane(tblProducts);
 					pnlCenter.add(scrollPane, BorderLayout.CENTER); 
 					scrollPane.setBounds(30, 40, 200, 300);
-					
-					tblProducts.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-						public void valueChanged(ListSelectionEvent event) {
-							if (!event.getValueIsAdjusting()) {
-								int selectedRow = tblProducts.getSelectedRow();
-								if(selectedRow != -1){
-									btnUpdate.setEnabled(true);
-									btnRemove.setEnabled(true);
-									String id = tblProducts.getValueAt(selectedRow, 0).toString();
-									String name = tblProducts.getValueAt(selectedRow, 1).toString();
-									String category = tblProducts.getValueAt(selectedRow, 2).toString();
-									String quantity = tblProducts.getValueAt(selectedRow, 3).toString();
-									String price = tblProducts.getValueAt(selectedRow, 4).toString();
-									
-									txtFieldID.setText(id);
-									txtFieldName.setText(name);
-									txtFieldCategory.setText(category);
-									txtFieldQuantity.setText(quantity);
-									txtFieldPrice.setText(price);
-									
-									txtFieldName.setEditable(true);
-									txtFieldName.setFocusable(true);
-									txtFieldCategory.setEditable(true);
-									txtFieldCategory.setFocusable(true);
-									txtFieldQuantity.setEditable(true);
-									txtFieldQuantity.setFocusable(true);
-									txtFieldPrice.setEditable(true);
-									txtFieldPrice.setFocusable(true);
-								}
-							}
-						}
-					});
 				}
 			}
 		}
 	}
-	
-
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		
 		switch (actionCommand) {
-		
-		case "addNew": //ADD NEW, BUTTON
+		case "addNew":
 			txtFieldName.setEditable(true);
 			txtFieldName.setFocusable(true);
 			txtFieldCategory.setEditable(true);
@@ -283,38 +237,16 @@ public class productsPage extends JPanel implements ActionListener {
 			txtFieldQuantity.setFocusable(true);
 			txtFieldPrice.setEditable(true);
 			txtFieldPrice.setFocusable(true);
-			btnCancel.setEnabled(true);
+			btnAddNew.setVisible(false);
+			btnAdd.setFocusable(true);
 			btnAdd.setEnabled(true);
-			btnUpdate.setEnabled(true);
+			btnEdit.setFocusable(true);
+			btnEdit.setEnabled(true);
+			btnRemove.setFocusable(true);
 			btnRemove.setEnabled(true);
 			break;
 		
-		case "cancel": //CANCEL BUTTON
-			txtFieldID.setText("");
-			txtFieldName.setText("");
-            txtFieldCategory.setText("");
-            txtFieldQuantity.setText("");
-            txtFieldPrice.setText("");
-			txtFieldName.setEditable(false);
-			txtFieldName.setFocusable(false);
-			txtFieldCategory.setEditable(false);
-			txtFieldCategory.setFocusable(false);
-			txtFieldQuantity.setEditable(false);
-			txtFieldQuantity.setFocusable(false);
-			txtFieldPrice.setEditable(false);
-			txtFieldPrice.setFocusable(false);
-			btnCancel.setEnabled(false);
-			btnAdd.setEnabled(false);
-			btnUpdate.setEnabled(false);
-			btnRemove.setEnabled(false);
-			break;
-		
-		case "refresh":
-			Database db = new Database();
-			db.selectAllProducts(model);
-			break;
-			
-		case "add": //ADD BUTTON
+		case "add":
 			String name = txtFieldName.getText();
 			String category = txtFieldCategory.getText();
 			int quantity = Integer.parseInt(txtFieldQuantity.getText());
@@ -323,10 +255,9 @@ public class productsPage extends JPanel implements ActionListener {
 			if (Database.addProducts(name, category, quantity, price)) {
 				
 				JOptionPane.showMessageDialog(null, "Product Added Successfully!");
-				db = new Database();
+				Database db = new Database();
 				db.selectAllProducts(model);
 				
-				txtFieldID.setText("");
 				txtFieldName.setText("");
 	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
@@ -339,72 +270,23 @@ public class productsPage extends JPanel implements ActionListener {
 				txtFieldQuantity.setFocusable(false);
 				txtFieldPrice.setEditable(false);
 				txtFieldPrice.setFocusable(false);
+				btnAdd.setFocusable(false);
 				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
+				btnEdit.setFocusable(false);
+				btnEdit.setEnabled(false);
+				btnRemove.setFocusable(false);
 				btnRemove.setEnabled(false);
 				
 			} else {
 				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
 			}
 			break;
+		case "edit":
 			
-		case "update": //EDIT BUTTON
-			int id = Integer.parseInt(txtFieldID.getText());
-			String txtName = txtFieldName.getText();
-			String txtCategory = txtFieldCategory.getText();
-			int txtQuantity = Integer.parseInt(txtFieldQuantity.getText());
-			double txtPrice = Double.parseDouble(txtFieldPrice.getText());
-			
-			if (Database.updateProducts(id, txtName, txtCategory, txtQuantity, txtPrice)) {
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            txtFieldCategory.setText("");
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				txtFieldCategory.setEditable(false);
-				txtFieldCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
-			}
 			break;
 			
 		case "remove":
-			id = Integer.parseInt(txtFieldID.getText());
-			if (Database.setInactiveProducts(id)) {
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            txtFieldCategory.setText("");
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				txtFieldCategory.setEditable(false);
-				txtFieldCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
-			}
+			
 			break;
 		}
 	}

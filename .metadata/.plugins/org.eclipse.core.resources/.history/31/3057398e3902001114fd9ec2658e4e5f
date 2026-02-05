@@ -1,0 +1,84 @@
+package database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public class Database {
+	
+	//SELECT * PRODUCTS
+	public void selectAllProducts(DefaultTableModel model) {
+		
+		model.setRowCount(0);
+		
+		String selectAll = "SELECT * FROM tbl_products WHERE active_status = 'Y' ORDER BY product_id desc";
+		
+		try	{	Connection conn = DBConnection.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(selectAll);
+				
+				while (rs.next()) {
+					String product_id = rs.getString("product_id");
+					String name = rs.getString("name");
+					String category = rs.getString("category");
+					String quantity = rs.getString("quantity");
+					String price = rs.getString("price");
+					
+					model.addRow(new String[] {product_id, name, category, quantity, price});
+				}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error, fetching data: " + e.getMessage());
+		}
+	}
+	
+	public static Boolean addProducts(String name, String category, int quantity, double price) {
+		
+		String insertInto = "INSERT INTO tbl_products (name, category, quantity, price) VALUES (?,?,?,?)";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(insertInto)) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, category);
+			stmt.setInt(3, quantity);
+			stmt.setDouble(4, price);
+			int rowsInserted = stmt.executeUpdate();
+			return rowsInserted > 0;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error ading product: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public static Boolean updateProducts(int id, String name, String category, int quantity, double price) {
+		
+		String update = "UPDATE tbl_products SET name=?, category=?, quantity=?, price=? WHERE product_id=?";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(update)) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, category);
+			stmt.setInt(3, quantity);
+			stmt.setDouble(4, price);
+			stmt.setInt(5, id);
+			
+			int rowsInserted = stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Data Updated Successfully!");
+			return rowsInserted > 0; 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error adding product: " + e.getMessage());
+			return false;
+		}
+	}
+}

@@ -96,7 +96,6 @@ public class productsPage extends JPanel implements ActionListener {
 							pnlButtons.add(btnCancel);
 							btnCancel.setActionCommand("cancel");
 							btnCancel.addActionListener(this);
-							btnCancel.setEnabled(false);
 						}
 						{
 							btnRefresh = new JButton("Refresh");
@@ -283,18 +282,12 @@ public class productsPage extends JPanel implements ActionListener {
 			txtFieldQuantity.setFocusable(true);
 			txtFieldPrice.setEditable(true);
 			txtFieldPrice.setFocusable(true);
-			btnCancel.setEnabled(true);
 			btnAdd.setEnabled(true);
 			btnUpdate.setEnabled(true);
 			btnRemove.setEnabled(true);
 			break;
 		
 		case "cancel": //CANCEL BUTTON
-			txtFieldID.setText("");
-			txtFieldName.setText("");
-            txtFieldCategory.setText("");
-            txtFieldQuantity.setText("");
-            txtFieldPrice.setText("");
 			txtFieldName.setEditable(false);
 			txtFieldName.setFocusable(false);
 			txtFieldCategory.setEditable(false);
@@ -303,7 +296,6 @@ public class productsPage extends JPanel implements ActionListener {
 			txtFieldQuantity.setFocusable(false);
 			txtFieldPrice.setEditable(false);
 			txtFieldPrice.setFocusable(false);
-			btnCancel.setEnabled(false);
 			btnAdd.setEnabled(false);
 			btnUpdate.setEnabled(false);
 			btnRemove.setEnabled(false);
@@ -326,7 +318,6 @@ public class productsPage extends JPanel implements ActionListener {
 				db = new Database();
 				db.selectAllProducts(model);
 				
-				txtFieldID.setText("");
 				txtFieldName.setText("");
 	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
@@ -349,6 +340,8 @@ public class productsPage extends JPanel implements ActionListener {
 			break;
 			
 		case "update": //EDIT BUTTON
+			int selectedRow = tblProducts.getSelectedRow();
+			
 			int id = Integer.parseInt(txtFieldID.getText());
 			String txtName = txtFieldName.getText();
 			String txtCategory = txtFieldCategory.getText();
@@ -356,10 +349,10 @@ public class productsPage extends JPanel implements ActionListener {
 			double txtPrice = Double.parseDouble(txtFieldPrice.getText());
 			
 			if (Database.updateProducts(id, txtName, txtCategory, txtQuantity, txtPrice)) {
-				db = new Database();
-				db.selectAllProducts(model);
+				JOptionPane.showMessageDialog(null, "Product Updated Successfully!");
+				Database datab = new Database();
+				datab.selectAllProducts(model);
 				
-				txtFieldID.setText("");
 				txtFieldName.setText("");
 	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
@@ -375,36 +368,11 @@ public class productsPage extends JPanel implements ActionListener {
 				btnAdd.setEnabled(false);
 				btnUpdate.setEnabled(false);
 				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
 			}
 			break;
 			
 		case "remove":
-			id = Integer.parseInt(txtFieldID.getText());
-			if (Database.setInactiveProducts(id)) {
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            txtFieldCategory.setText("");
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				txtFieldCategory.setEditable(false);
-				txtFieldCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
-			}
+			
 			break;
 		}
 	}
