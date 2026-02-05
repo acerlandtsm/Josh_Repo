@@ -15,7 +15,7 @@ public class Database {
 		
 		model.setRowCount(0);
 		
-		String selectAll = "SELECT * FROM tbl_products";
+		String selectAll = "SELECT * FROM tbl_products WHERE active_status = 'Y' ORDER BY product_id desc";
 		
 		try	{	Connection conn = DBConnection.getConnection();
 				Statement stmt = conn.createStatement();
@@ -55,6 +55,46 @@ public class Database {
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error ading product: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public static Boolean updateProducts(int id, String name, String category, int quantity, double price) {
+		
+		String update = "UPDATE tbl_products SET name=?, category=?, quantity=?, price=? WHERE product_id=?";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(update)) {
+			
+			stmt.setString(1, name);
+			stmt.setString(2, category);
+			stmt.setInt(3, quantity);
+			stmt.setDouble(4, price);
+			stmt.setInt(5, id);
+			
+			int rowsInserted = stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Data Updated Successfully!");
+			return rowsInserted > 0; 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error adding product: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public static Boolean setInactiveProducts(int id) {
+		String setInactive = "UPDATE tbl_products SET active_status = '' WHERE product_id=?";
+		try (Connection conn = DBConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(setInactive)) {
+			
+			stmt.setInt(1, id);
+			int rowsInserted = stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Data Removed Successfully!");
+			return rowsInserted > 0; 
+			
+		}  catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error adding product: " + e.getMessage());
 			return false;
 		}
 	}
