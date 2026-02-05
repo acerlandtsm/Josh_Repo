@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +42,7 @@ public class productsPage extends JPanel implements ActionListener {
 	
 	private JTextField txtFieldID;
 	private JTextField txtFieldName;
-	private JComboBox comboCategory;
+	private JTextField txtFieldCategory;
 	private JTextField txtFieldQuantity;
 	private JTextField txtFieldPrice;
 	
@@ -97,7 +96,6 @@ public class productsPage extends JPanel implements ActionListener {
 							pnlButtons.add(btnCancel);
 							btnCancel.setActionCommand("cancel");
 							btnCancel.addActionListener(this);
-							btnCancel.setEnabled(false);
 						}
 						{
 							btnRefresh = new JButton("Refresh");
@@ -161,11 +159,10 @@ public class productsPage extends JPanel implements ActionListener {
 								txtFieldName.setFocusable(false);
 							}
 							{
-								String[] comboList = {"Land", "Residential", "Commercial"};
-								comboCategory = new JComboBox<>(comboList);
-								pnlTxtFields.add(comboCategory);
-								comboCategory.setEnabled(false);
-								comboCategory.setSelectedItem(null);
+								txtFieldCategory = new JTextField();
+								pnlTxtFields.add(txtFieldCategory);
+								txtFieldCategory.setEditable(false);
+								txtFieldCategory.setFocusable(false);
 							}
 							{
 								txtFieldQuantity = new JTextField();
@@ -247,17 +244,18 @@ public class productsPage extends JPanel implements ActionListener {
 									
 									txtFieldID.setText(id);
 									txtFieldName.setText(name);
-									comboCategory.setSelectedItem(category);
+									txtFieldCategory.setText(category);
 									txtFieldQuantity.setText(quantity);
 									txtFieldPrice.setText(price);
+									
 									txtFieldName.setEditable(true);
 									txtFieldName.setFocusable(true);
-									comboCategory.setEnabled(true);
+									txtFieldCategory.setEditable(true);
+									txtFieldCategory.setFocusable(true);
 									txtFieldQuantity.setEditable(true);
 									txtFieldQuantity.setFocusable(true);
 									txtFieldPrice.setEditable(true);
 									txtFieldPrice.setFocusable(true);
-									btnCancel.setEnabled(true);
 								}
 							}
 						}
@@ -278,12 +276,12 @@ public class productsPage extends JPanel implements ActionListener {
 		case "addNew": //ADD NEW, BUTTON
 			txtFieldName.setEditable(true);
 			txtFieldName.setFocusable(true);
-			comboCategory.setEnabled(true);
+			txtFieldCategory.setEditable(true);
+			txtFieldCategory.setFocusable(true);
 			txtFieldQuantity.setEditable(true);
 			txtFieldQuantity.setFocusable(true);
 			txtFieldPrice.setEditable(true);
 			txtFieldPrice.setFocusable(true);
-			btnCancel.setEnabled(true);
 			btnAdd.setEnabled(true);
 			btnUpdate.setEnabled(true);
 			btnRemove.setEnabled(true);
@@ -292,18 +290,17 @@ public class productsPage extends JPanel implements ActionListener {
 		case "cancel": //CANCEL BUTTON
 			txtFieldID.setText("");
 			txtFieldName.setText("");
-            comboCategory.setSelectedItem(null);
+            txtFieldCategory.setText("");
             txtFieldQuantity.setText("");
             txtFieldPrice.setText("");
 			txtFieldName.setEditable(false);
 			txtFieldName.setFocusable(false);
-			comboCategory.setEditable(false);
-			comboCategory.setFocusable(false);
+			txtFieldCategory.setEditable(false);
+			txtFieldCategory.setFocusable(false);
 			txtFieldQuantity.setEditable(false);
 			txtFieldQuantity.setFocusable(false);
 			txtFieldPrice.setEditable(false);
 			txtFieldPrice.setFocusable(false);
-			btnCancel.setEnabled(false);
 			btnAdd.setEnabled(false);
 			btnUpdate.setEnabled(false);
 			btnRemove.setEnabled(false);
@@ -316,7 +313,7 @@ public class productsPage extends JPanel implements ActionListener {
 			
 		case "add": //ADD BUTTON
 			String name = txtFieldName.getText();
-			String category = (String) comboCategory.getSelectedItem();
+			String category = txtFieldCategory.getText();
 			int quantity = Integer.parseInt(txtFieldQuantity.getText());
 			double price = Double.parseDouble(txtFieldPrice.getText());
 			
@@ -328,13 +325,13 @@ public class productsPage extends JPanel implements ActionListener {
 				
 				txtFieldID.setText("");
 				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
+	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
 	            txtFieldPrice.setText("");
 				txtFieldName.setEditable(false);
 				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
+				txtFieldCategory.setEditable(false);
+				txtFieldCategory.setFocusable(false);
 				txtFieldQuantity.setEditable(false);
 				txtFieldQuantity.setFocusable(false);
 				txtFieldPrice.setEditable(false);
@@ -351,7 +348,7 @@ public class productsPage extends JPanel implements ActionListener {
 		case "update": //EDIT BUTTON
 			int id = Integer.parseInt(txtFieldID.getText());
 			String txtName = txtFieldName.getText();
-			String txtCategory = (String) comboCategory.getSelectedItem();
+			String txtCategory = txtFieldCategory.getText();
 			int txtQuantity = Integer.parseInt(txtFieldQuantity.getText());
 			double txtPrice = Double.parseDouble(txtFieldPrice.getText());
 			
@@ -361,13 +358,13 @@ public class productsPage extends JPanel implements ActionListener {
 				
 				txtFieldID.setText("");
 				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
+	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
 	            txtFieldPrice.setText("");
 				txtFieldName.setEditable(false);
 				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
+				txtFieldCategory.setEditable(false);
+				txtFieldCategory.setFocusable(false);
 				txtFieldQuantity.setEditable(false);
 				txtFieldQuantity.setFocusable(false);
 				txtFieldPrice.setEditable(false);
@@ -388,13 +385,13 @@ public class productsPage extends JPanel implements ActionListener {
 				
 				txtFieldID.setText("");
 				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
+	            txtFieldCategory.setText("");
 	            txtFieldQuantity.setText("");
 	            txtFieldPrice.setText("");
 				txtFieldName.setEditable(false);
 				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
+				txtFieldCategory.setEditable(false);
+				txtFieldCategory.setFocusable(false);
 				txtFieldQuantity.setEditable(false);
 				txtFieldQuantity.setFocusable(false);
 				txtFieldPrice.setEditable(false);
