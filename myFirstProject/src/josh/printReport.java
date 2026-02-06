@@ -15,10 +15,14 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class printReport {
 
-	public static void printJReport(String reportPath, Map<String, Object> parameters) {
+	public static void printJReport(String reportPath, String status, int quantity) {
 		try {
 			Connection conn = DBConnection.getConnection();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
+			Map<String, Object> parameters = new java.util.HashMap<>();
+			parameters.put("ActiveStatus", status);
+			parameters.put("Quantity", quantity);
+			System.out.println(status);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
 			JasperViewer viewer = new JasperViewer(jasperPrint, false);
 			viewer.setTitle("sample");

@@ -43,12 +43,17 @@ public class productsPage extends JPanel implements ActionListener {
 	private JLabel lblCategory;
 	private JLabel lblQuantity;
 	private JLabel lblPrice;
+	private JLabel lblForPrint;
+	private JLabel lblForQuantityPrint;
+	private JLabel lblForActiveStats;
 	
 	private JTextField txtFieldID;
 	private JTextField txtFieldName;
 	private JComboBox<String>  comboCategory;
 	private JTextField txtFieldQuantity;
 	private JTextField txtFieldPrice;
+	private JTextField txtFieldForQuantityPrint;
+	private JTextField txtFieldForActiveStats;
 	
 	private JButton btnRefresh;
 	private JButton btnAddNew;
@@ -58,10 +63,13 @@ public class productsPage extends JPanel implements ActionListener {
 	private JButton btnRemove;
 	
 	private JButton btnPrint;
+	private JButton btnPreview;
 	
 	private JScrollPane scrollPane;
 	private DefaultTableModel model;
 	private JTable tblProducts;
+	
+	private JPanel pnlPrint; 
 	
 	productsPage() {
 		initGUI();
@@ -219,6 +227,55 @@ public class productsPage extends JPanel implements ActionListener {
 						}
 					}
 				}
+				{
+					pnlPrint = new JPanel(new BorderLayout());
+					pnlWest.add(pnlPrint, BorderLayout.SOUTH);
+					pnlPrint.setBorder(new CompoundBorder(outerBorder, innerBorder));
+					pnlPrint.setVisible(false);
+					{
+						lblForPrint = new JLabel("PRINT");
+						pnlPrint.add(lblForPrint, BorderLayout.NORTH);
+					}
+					{
+						JPanel pnlQuantity = new JPanel(new GridLayout(0,2));
+						pnlPrint.add(pnlQuantity, BorderLayout.CENTER);
+						pnlQuantity.setBorder(new EmptyBorder(10, 10, 10, 10));
+						{
+							{
+								JPanel pnlQuantityWest = new JPanel(new GridLayout(2, 1, 0, 0));
+								pnlQuantity.add(pnlQuantityWest);
+								pnlQuantityWest.setBorder(new EmptyBorder(10, 10, 10, 10));
+								{
+									lblForQuantityPrint = new JLabel("Quantity:");
+									pnlQuantityWest.add(lblForQuantityPrint);
+								}
+								{
+									lblForActiveStats = new JLabel("Active Status:");
+									pnlQuantityWest.add(lblForActiveStats);
+								}
+							}
+							{
+								JPanel pnlQuantityEast = new JPanel(new GridLayout(2, 1, 0, 0));
+								pnlQuantity.add(pnlQuantityEast);
+								pnlQuantityEast.setBorder(new EmptyBorder(10, 10, 10, 10));
+								{
+									txtFieldForQuantityPrint = new JTextField();
+									pnlQuantityEast.add(txtFieldForQuantityPrint);
+								}
+								{
+									txtFieldForActiveStats = new JTextField();
+									pnlQuantityEast.add(txtFieldForActiveStats);
+								}
+							}
+						}
+					}
+					{
+						btnPreview = new JButton("Preview");
+						pnlPrint.add(btnPreview, BorderLayout.SOUTH);
+						btnPreview.setActionCommand("preview");
+						btnPreview.addActionListener(this);
+					}
+				}
 			}
 			{
 				JPanel pnlCenter = new JPanel(new BorderLayout());
@@ -285,9 +342,8 @@ public class productsPage extends JPanel implements ActionListener {
 		
 		switch (actionCommand) {
 		
-		case "print": //PRINT, JASPER REPORTS
-			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
-			printReport.printJReport(reportPath, null);
+		case "print": // OPENS PREVIEW OPTION
+			pnlPrint.setVisible(true);
 			break;
 		
 		case "addNew": //ADD NEW, BUTTON
@@ -429,6 +485,14 @@ public class productsPage extends JPanel implements ActionListener {
 				}
 				break;
 			}
+			break;
+		
+		case "preview": // PREVIEW OPTION
+			pnlPrint.setVisible(false);
+			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+			String activeStatus = txtFieldForActiveStats.getText();
+			Integer quantityNo = Integer.valueOf(txtFieldForQuantityPrint.getText());
+			printReport.printJReport(reportPath, activeStatus, quantityNo);
 			break;
 		}
 	}

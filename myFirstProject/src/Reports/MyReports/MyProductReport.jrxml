@@ -3,7 +3,10 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Data Adapter"/>
 	<dataset name="Empty Dataset1" uuid="3e979a6f-af67-4ccc-9321-fd3f99474d0e"/>
-	<query language="SQL"><![CDATA[SELECT * FROM tbl_products;]]></query>
+	<parameter name="ActiveStatus" class="java.lang.String"/>
+	<parameter name="Quantity" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT * FROM tbl_products WHERE active_status = $P{ActiveStatus} 
+AND quantity >= $P{Quantity} ;]]></query>
 	<field name="product_id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="product_id"/>
 		<property name="com.jaspersoft.studio.field.label" value="product_id"/>
