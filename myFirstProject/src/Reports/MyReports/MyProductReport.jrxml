@@ -3,7 +3,6 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Data Adapter"/>
 	<dataset name="Empty Dataset1" uuid="3e979a6f-af67-4ccc-9321-fd3f99474d0e"/>
-	<parameter name="Category" class="java.lang.String"/>
 	<query language="SQL"><![CDATA[SELECT * FROM tbl_products;]]></query>
 	<field name="product_id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="product_id"/>

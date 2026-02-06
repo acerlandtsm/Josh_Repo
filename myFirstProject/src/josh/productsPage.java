@@ -26,9 +26,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import josh.printReport;
+//import josh.printReport;
 
 import database.Database;
+import net.sf.jasperreports.view.JasperViewer;
 public class productsPage extends JPanel implements ActionListener {
 
 	private JPanel pnlMain;
@@ -277,9 +278,7 @@ public class productsPage extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
 
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
@@ -287,8 +286,8 @@ public class productsPage extends JPanel implements ActionListener {
 		switch (actionCommand) {
 		
 		case "print": //PRINT, JASPER REPORTS
-			String reportPath = System.getProperty("user.dir") + "/src/Reports/MyReports/MyProductReport.jrxml";
-			printReport.printJReport(reportPath);
+			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+			printReport.printJReport(reportPath, null);
 			break;
 		
 		case "addNew": //ADD NEW, BUTTON
