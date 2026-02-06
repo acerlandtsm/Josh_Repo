@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,15 +26,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import database.Database;
+import josh.printReport;
 
+import database.Database;
 public class productsPage extends JPanel implements ActionListener {
 
 	private JPanel pnlMain;
 	
 	private Border outerBorder = BorderFactory.createLineBorder(Color.GRAY);
 	private Border innerBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-	
 	
 	private JLabel lblProducts;
 	private JLabel lblID;
@@ -43,7 +45,7 @@ public class productsPage extends JPanel implements ActionListener {
 	
 	private JTextField txtFieldID;
 	private JTextField txtFieldName;
-	private JComboBox comboCategory;
+	private JComboBox<String>  comboCategory;
 	private JTextField txtFieldQuantity;
 	private JTextField txtFieldPrice;
 	
@@ -53,6 +55,8 @@ public class productsPage extends JPanel implements ActionListener {
 	private JButton btnAdd;
 	private JButton btnUpdate;
 	private JButton btnRemove;
+	
+	private JButton btnPrint;
 	
 	private JScrollPane scrollPane;
 	private DefaultTableModel model;
@@ -84,8 +88,14 @@ public class productsPage extends JPanel implements ActionListener {
 						}
 					}
 					{
-						JPanel pnlButtons = new JPanel(new GridLayout(1,3));
+						JPanel pnlButtons = new JPanel(new GridLayout(1,4));
 						pnlNorth.add(pnlButtons);
+						{
+							btnPrint = new JButton("Print");
+							pnlButtons.add(btnPrint);
+							btnPrint.setActionCommand("print");
+							btnPrint.addActionListener(this);
+						}
 						{
 							btnAddNew = new JButton("Add new");
 							pnlButtons.add(btnAddNew);
@@ -228,6 +238,7 @@ public class productsPage extends JPanel implements ActionListener {
 					tblProducts.getColumnModel().getColumn(0).setPreferredWidth(30);
 					tblProducts.getColumnModel().getColumn(1).setPreferredWidth(150);
 					tblProducts.getColumnModel().getColumn(2).setPreferredWidth(90);
+					tblProducts.getColumnModel().getColumn(3).setPreferredWidth(50);
 					scrollPane = new JScrollPane(tblProducts);
 					pnlCenter.add(scrollPane, BorderLayout.CENTER); 
 					scrollPane.setBounds(30, 40, 200, 300);
@@ -275,6 +286,16 @@ public class productsPage extends JPanel implements ActionListener {
 		
 		switch (actionCommand) {
 		
+		case "print": //PRINT, JASPER REPORTS
+			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jrxml";
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("Product Analysis", "Product List");
+			
+			if (printReport.printJReport(reportPath, parameters)) {
+				JOptionPane.showMessageDialog(null, "Printing Success!");
+			}
+			break;
+		
 		case "addNew": //ADD NEW, BUTTON
 			txtFieldName.setEditable(true);
 			txtFieldName.setFocusable(true);
@@ -285,8 +306,6 @@ public class productsPage extends JPanel implements ActionListener {
 			txtFieldPrice.setFocusable(true);
 			btnCancel.setEnabled(true);
 			btnAdd.setEnabled(true);
-			btnUpdate.setEnabled(true);
-			btnRemove.setEnabled(true);
 			break;
 		
 		case "cancel": //CANCEL BUTTON
@@ -322,27 +341,29 @@ public class productsPage extends JPanel implements ActionListener {
 			
 			if (Database.addProducts(name, category, quantity, price)) {
 				
-				JOptionPane.showMessageDialog(null, "Product Added Successfully!");
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-				
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
+				if (choice == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(null, "Product Added Successfully!");
+					db = new Database();
+					db.selectAllProducts(model);
+					
+					txtFieldID.setText("");
+					txtFieldName.setText("");
+		            comboCategory.setSelectedItem(null);
+		            txtFieldQuantity.setText("");
+		            txtFieldPrice.setText("");
+					txtFieldName.setEditable(false);
+					txtFieldName.setFocusable(false);
+					comboCategory.setEditable(false);
+					comboCategory.setFocusable(false);
+					txtFieldQuantity.setEditable(false);
+					txtFieldQuantity.setFocusable(false);
+					txtFieldPrice.setEditable(false);
+					txtFieldPrice.setFocusable(false);
+					btnAdd.setEnabled(false);
+					btnUpdate.setEnabled(false);
+					btnRemove.setEnabled(false);
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
 			}
@@ -355,55 +376,64 @@ public class productsPage extends JPanel implements ActionListener {
 			int txtQuantity = Integer.parseInt(txtFieldQuantity.getText());
 			double txtPrice = Double.parseDouble(txtFieldPrice.getText());
 			
-			if (Database.updateProducts(id, txtName, txtCategory, txtQuantity, txtPrice)) {
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
+			int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to continue and update?", "Confirmation", JOptionPane.YES_NO_OPTION);
+			if (choice == JOptionPane.YES_OPTION) {
+				if (Database.updateProducts(id, txtName, txtCategory, txtQuantity, txtPrice)) {
+					db = new Database();
+					db.selectAllProducts(model);
+					
+					txtFieldID.setText("");
+					txtFieldName.setText("");
+		            comboCategory.setSelectedItem(null);
+		            txtFieldQuantity.setText("");
+		            txtFieldPrice.setText("");
+					txtFieldName.setEditable(false);
+					txtFieldName.setFocusable(false);
+					comboCategory.setEditable(false);
+					comboCategory.setFocusable(false);
+					txtFieldQuantity.setEditable(false);
+					txtFieldQuantity.setFocusable(false);
+					txtFieldPrice.setEditable(false);
+					txtFieldPrice.setFocusable(false);
+					btnAdd.setEnabled(false);
+					btnUpdate.setEnabled(false);
+					btnRemove.setEnabled(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
+				}
+				break;
 			}
 			break;
 			
 		case "remove":
 			id = Integer.parseInt(txtFieldID.getText());
-			if (Database.setInactiveProducts(id)) {
-				db = new Database();
-				db.selectAllProducts(model);
-				
-				txtFieldID.setText("");
-				txtFieldName.setText("");
-	            comboCategory.setSelectedItem(null);
-	            txtFieldQuantity.setText("");
-	            txtFieldPrice.setText("");
-				txtFieldName.setEditable(false);
-				txtFieldName.setFocusable(false);
-				comboCategory.setEditable(false);
-				comboCategory.setFocusable(false);
-				txtFieldQuantity.setEditable(false);
-				txtFieldQuantity.setFocusable(false);
-				txtFieldPrice.setEditable(false);
-				txtFieldPrice.setFocusable(false);
-				btnAdd.setEnabled(false);
-				btnUpdate.setEnabled(false);
-				btnRemove.setEnabled(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
+			
+			choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to continue and remove?", "Confirmation", JOptionPane.YES_NO_OPTION);
+			if (choice == JOptionPane.YES_OPTION) {
+				if (Database.setInactiveProducts(id)) {
+					db = new Database();
+					db.selectAllProducts(model);
+					
+					txtFieldID.setText("");
+					txtFieldName.setText("");
+		            comboCategory.setSelectedItem(null);
+		            txtFieldQuantity.setText("");
+		            txtFieldPrice.setText("");
+					txtFieldName.setEditable(false);
+					txtFieldName.setFocusable(false);
+					comboCategory.setEditable(false);
+					comboCategory.setFocusable(false);
+					txtFieldQuantity.setEditable(false);
+					txtFieldQuantity.setFocusable(false);
+					txtFieldPrice.setEditable(false);
+					txtFieldPrice.setFocusable(false);
+					btnAdd.setEnabled(false);
+					btnUpdate.setEnabled(false);
+					btnRemove.setEnabled(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Could not complete process, please try again.");
+				}
+				break;
 			}
 			break;
 		}

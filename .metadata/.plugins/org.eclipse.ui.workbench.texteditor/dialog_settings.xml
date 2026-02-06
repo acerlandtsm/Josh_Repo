@@ -4,6 +4,7 @@
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="add new"/>
 			<item value="JTabl;"/>
 			<item value="namespaceUser"/>
 			<item value="storedPassword"/>
@@ -18,7 +19,6 @@
 			<item value="cancel"/>
 			<item value="openLoginPanel"/>
 			<item value="visible"/>
-			<item value="visibl;e"/>
 		</list>
 	</section>
 </section>
