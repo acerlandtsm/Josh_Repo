@@ -287,13 +287,8 @@ public class productsPage extends JPanel implements ActionListener {
 		switch (actionCommand) {
 		
 		case "print": //PRINT, JASPER REPORTS
-			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jrxml";
-			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("Product Analysis", "Product List");
-			
-			if (printReport.printJReport(reportPath, parameters)) {
-				JOptionPane.showMessageDialog(null, "Printing Success!");
-			}
+			String reportPath = System.getProperty("user.dir") + "/src/Reports/MyReports/MyProductReport.jrxml";
+			printReport.printJReport(reportPath);
 			break;
 		
 		case "addNew": //ADD NEW, BUTTON

@@ -2,7 +2,6 @@ package josh;
 
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -15,12 +14,12 @@ import net.sf.jasperreports.engine.JasperReport;
 
 public class printReport {
 
-	static Boolean printJReport(String reportPath, Map<String, Object> param) {
+	public static Boolean printJReport(String reportPath) {
 		try {
 			Connection conn = DBConnection.getConnection();
 			JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
 			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, conn);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap<>(), conn);
 			
             JasperPrintManager.printReport(jasperPrint, true);
 
