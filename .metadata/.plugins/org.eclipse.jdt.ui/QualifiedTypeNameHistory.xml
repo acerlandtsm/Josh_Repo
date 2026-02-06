@@ -26,5 +26,6 @@
     <fullyQualifiedTypeName name="javax.swing.border.EmptyBorder"/>
     <fullyQualifiedTypeName name="javax.swing.border.CompoundBorder"/>
     <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="database.Database"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>
