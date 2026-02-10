@@ -46,10 +46,12 @@ public class productsPage extends JPanel implements ActionListener {
 	private JLabel lblForPrint;
 	private JLabel lblForQuantityPrint;
 	private JLabel lblForActiveStats;
+	private JLabel lblPrintType;
 	
 	private JTextField txtFieldID;
 	private JTextField txtFieldName;
 	private JComboBox<String>  comboCategory;
+	private JComboBox<String> comboPrintType;
 	private JTextField txtFieldQuantity;
 	private JTextField txtFieldPrice;
 	private JTextField txtFieldForQuantityPrint;
@@ -242,9 +244,13 @@ public class productsPage extends JPanel implements ActionListener {
 						pnlQuantity.setBorder(new EmptyBorder(10, 10, 10, 10));
 						{
 							{
-								JPanel pnlQuantityWest = new JPanel(new GridLayout(2, 1, 0, 0));
+								JPanel pnlQuantityWest = new JPanel(new GridLayout(3, 1, 0, 0));
 								pnlQuantity.add(pnlQuantityWest);
 								pnlQuantityWest.setBorder(new EmptyBorder(10, 10, 10, 10));
+								{
+									lblPrintType = new JLabel("Print Type:");
+									pnlQuantityWest.add(lblPrintType);
+								}
 								{
 									lblForQuantityPrint = new JLabel("Quantity:");
 									pnlQuantityWest.add(lblForQuantityPrint);
@@ -255,9 +261,15 @@ public class productsPage extends JPanel implements ActionListener {
 								}
 							}
 							{
-								JPanel pnlQuantityEast = new JPanel(new GridLayout(2, 1, 0, 0));
+								JPanel pnlQuantityEast = new JPanel(new GridLayout(3, 1, 0, 0));
 								pnlQuantity.add(pnlQuantityEast);
 								pnlQuantityEast.setBorder(new EmptyBorder(10, 10, 10, 10));
+								{
+									String[] comboList2 = {"PRODUCTS", "SALES"};
+									comboPrintType = new JComboBox<>(comboList2);
+									pnlQuantityEast.add(comboPrintType);
+									comboPrintType.setSelectedItem(null);
+								}
 								{
 									txtFieldForQuantityPrint = new JTextField();
 									pnlQuantityEast.add(txtFieldForQuantityPrint);
@@ -488,11 +500,37 @@ public class productsPage extends JPanel implements ActionListener {
 			break;
 		
 		case "preview": // PREVIEW OPTION
-			pnlPrint.setVisible(false);
-			String reportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+
+			String productsReportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+			String salesReportPath = "";
 			String activeStatus = txtFieldForActiveStats.getText();
-			Integer quantityNo = Integer.valueOf(txtFieldForQuantityPrint.getText());
-			printReport.printJReport(reportPath, activeStatus, quantityNo);
+			String printType = (String) comboPrintType.getSelectedItem();
+			String quantityNo = txtFieldForQuantityPrint.getText();
+			try {
+				
+				if (printType.isEmpty() || activeStatus.isEmpty() || quantityNo.isEmpty()) {
+				    JOptionPane.showMessageDialog(null, "Please fill out all fields!");
+				    return;
+				}
+				
+				if (!printType.isEmpty() && !activeStatus.isEmpty() && !quantityNo.isEmpty()) {
+					if (printType.equals("PRODUCTS")) {
+						printReport.printJReport(productsReportPath, activeStatus, quantityNo);
+						pnlPrint.setVisible(false);
+						break;
+					} else if (printType.equals("SALES")) {
+						printReport.printJReport(salesReportPath, activeStatus, quantityNo);
+						pnlPrint.setVisible(false);
+						break;
+					} else {
+						JOptionPane.showMessageDialog(null, "Please Select a print type!");
+						break;
+					}
+				}
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Entry cannot be empty!");
+				break;
+			}
 			break;
 		}
 	}

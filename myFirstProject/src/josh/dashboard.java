@@ -43,6 +43,7 @@ public class dashboard extends JFrame implements ActionListener {
 	private loginPage loginPage;
 	private productsPage productsPage;
 	private customersPage customersPage;
+	private salesPage salesPage;
 	
 	
 	public dashboard() throws HeadlessException {
@@ -101,6 +102,8 @@ public class dashboard extends JFrame implements ActionListener {
 					pnlCenter.add(productsPage, "products");
 					customersPage = new customersPage();
 					pnlCenter.add(customersPage, "customers");
+					salesPage = new salesPage();
+					pnlCenter.add(salesPage, "sales");
 				}
 			}
 			{
@@ -167,6 +170,7 @@ public class dashboard extends JFrame implements ActionListener {
 			break;
 		case "products":
 		case "customers":
+		case "sales":
 			cardLayout.show(pnlCenter, actionCommand);
 			break;
 		

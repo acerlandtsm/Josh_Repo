@@ -1,12 +1,12 @@
 <!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="MyProductReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a2b80fe-b249-4f36-a929-0a46920095af">
+<jasperReport name="MyProductReport" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a2b80fe-b249-4f36-a929-0a46920095af">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Data Adapter"/>
 	<dataset name="Empty Dataset1" uuid="3e979a6f-af67-4ccc-9321-fd3f99474d0e"/>
 	<parameter name="ActiveStatus" class="java.lang.String"/>
-	<parameter name="Quantity" class="java.lang.Integer"/>
+	<parameter name="Quantity" class="java.lang.String"/>
 	<query language="SQL"><![CDATA[SELECT * FROM tbl_products WHERE active_status = $P{ActiveStatus} 
-AND quantity >= $P{Quantity} ;]]></query>
+AND quantity >= $P{Quantity} :: INTEGER;]]></query>
 	<field name="product_id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="product_id"/>
 		<property name="com.jaspersoft.studio.field.label" value="product_id"/>
@@ -38,23 +38,23 @@ AND quantity >= $P{Quantity} ;]]></query>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_products"/>
 	</field>
 	<background splitType="Stretch"/>
-	<title height="91" splitType="Stretch">
-		<element kind="staticText" uuid="0126b174-6803-4e98-a225-7f7afee6a653" x="10" y="20" width="480" height="20" fontName="SansSerif" fontSize="14.0" bold="true">
-			<text><![CDATA[ACERLAND PRODUCT AVAILABILITY & ANALYSIS REPORT]]></text>
+	<title height="80" splitType="Stretch">
+		<element kind="staticText" uuid="0126b174-6803-4e98-a225-7f7afee6a653" x="10" y="20" width="280" height="20" fontName="SansSerif" fontSize="14.0" bold="true">
+			<text><![CDATA[ACERLAND REALTY CORPORATION]]></text>
 		</element>
-		<element kind="staticText" uuid="9b7acc14-1a12-442f-bcb4-c3ec9915218d" x="10" y="40" width="290" height="10" fontSize="8.0">
+		<element kind="staticText" uuid="9b7acc14-1a12-442f-bcb4-c3ec9915218d" x="10" y="40" width="180" height="10" fontSize="7.0">
 			<text><![CDATA[2F, Sunshine Square, Mandala Park, 312 Shaw Blvd, Mandaluyong City.]]></text>
 		</element>
-		<element kind="staticText" uuid="97dbf38d-04b2-4d3c-8657-156dade9e274" x="10" y="50" width="60" height="20" fontSize="8.0">
-			<text><![CDATA[Generated on: ]]></text>
-		</element>
-		<element kind="textField" uuid="0d65b806-beb9-4f10-aebb-85ae9cd7f6cc" x="70" y="50" width="80" height="20" fontSize="8.0" pattern="MMMMM dd, yyyy">
-			<expression><![CDATA[new java.util.Date()]]></expression>
-		</element>
 		<element kind="line" uuid="a26d6188-eec5-4cdf-a105-e0a359b4d199" x="-3" y="70" width="560" height="1"/>
+		<element kind="staticText" uuid="8c3f0711-17f4-499c-96d4-f5aeea8558e5" x="10" y="60" width="250" height="20" fontSize="9.0">
+			<text><![CDATA[SAMPLE PRODUCT AVAILABILITY & ANALYSIS REPORT]]></text>
+		</element>
 	</title>
-	<columnHeader height="20">
-		<element kind="staticText" uuid="8729f914-0009-46a6-9792-e368e94a4499" x="190" y="0" width="90" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center">
+	<columnHeader height="41">
+		<element kind="staticText" uuid="2294bdf0-f19b-4be7-9a2b-da28fc41709c" x="100" y="0" width="100" height="20" bold="true">
+			<text><![CDATA[PRODUCT LIST]]></text>
+		</element>
+		<element kind="staticText" uuid="8729f914-0009-46a6-9792-e368e94a4499" mode="Opaque" x="190" y="21" width="90" height="20" backcolor="#BABABA" bold="true" hTextAlign="Center">
 			<text><![CDATA[Category]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a5acb447-1ac1-4e1d-a42e-b9cb4e0e93e8"/>
 			<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -68,7 +68,7 @@ AND quantity >= $P{Quantity} ;]]></query>
 				<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="e940af95-c2c0-4b0b-88cd-d0d5adf2af45" x="280" y="0" width="60" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center">
+		<element kind="staticText" uuid="e940af95-c2c0-4b0b-88cd-d0d5adf2af45" mode="Opaque" x="280" y="21" width="60" height="20" backcolor="#BABABA" bold="true" hTextAlign="Center">
 			<text><![CDATA[Quantity]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86c70064-5809-4884-8661-1d3eb7556dd8"/>
 			<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -81,7 +81,7 @@ AND quantity >= $P{Quantity} ;]]></query>
 				<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="400d5b29-205c-4fce-a198-ad665b0886b5" x="340" y="0" width="90" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center">
+		<element kind="staticText" uuid="400d5b29-205c-4fce-a198-ad665b0886b5" mode="Opaque" x="340" y="21" width="90" height="20" backcolor="#BABABA" bold="true" hTextAlign="Center">
 			<text><![CDATA[Price]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="538e5bd9-b790-4830-b4ea-080ba28e4e09"/>
 			<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -94,7 +94,7 @@ AND quantity >= $P{Quantity} ;]]></query>
 				<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="e15ec0ff-8e86-4c49-b56f-de7639d4911d" x="100" y="0" width="90" height="20" backcolor="#FFFFFF" fontSize="12.0" bold="true" hTextAlign="Center">
+		<element kind="staticText" uuid="e15ec0ff-8e86-4c49-b56f-de7639d4911d" mode="Opaque" x="100" y="21" width="90" height="20" backcolor="#BABABA" fontSize="12.0" bold="true" hTextAlign="Center">
 			<text><![CDATA[Name]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dbc36226-276d-4469-a0b1-082e243a4feb"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -159,7 +159,7 @@ AND quantity >= $P{Quantity} ;]]></query>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</detail>
-	<pageFooter height="11" splitType="Stretch">
+	<pageFooter height="20" splitType="Stretch">
 		<element kind="textField" uuid="af1fc612-501c-43f4-b877-9995556c33a9" x="420" y="0" width="40" height="11" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></expression>
 		</element>
@@ -167,5 +167,11 @@ AND quantity >= $P{Quantity} ;]]></query>
 			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
 		</element>
 		<element kind="line" uuid="f4c3e790-f870-4201-b7bc-f80b90a61c70" x="-3" y="0" width="560" height="1"/>
+		<element kind="textField" uuid="0d65b806-beb9-4f10-aebb-85ae9cd7f6cc" x="60" y="0" width="80" height="20" fontSize="8.0" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="97dbf38d-04b2-4d3c-8657-156dade9e274" x="0" y="0" width="60" height="20" fontSize="8.0">
+			<text><![CDATA[Generated on: ]]></text>
+		</element>
 	</pageFooter>
 </jasperReport>
