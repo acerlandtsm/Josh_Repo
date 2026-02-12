@@ -1,6 +1,7 @@
 package josh;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class printReport {
 
-	public static void printJReport(String reportPath, String status, String quantity) {
+	public static void printProductsJReport(String reportPath, String status, String quantity) {
 		try {
 			Connection conn = DBConnection.getConnection();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
@@ -24,11 +25,31 @@ public class printReport {
 			parameters.put("Quantity", quantity);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
 			JasperViewer viewer = new JasperViewer(jasperPrint, false);
-			viewer.setTitle("sample");
+			viewer.setTitle("Products");
 			viewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			viewer.setLocationRelativeTo(null);
 			viewer.setVisible(true);
             
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error printing report: " + e.getMessage());
+		}
+	}
+	
+	public static void printSalesJReport(String reportPath, java.util.Date startDate, java.util.Date endDate) {
+		try {
+			Connection conn = DBConnection.getConnection();
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
+			Map<String, Object> parameters = new java.util.HashMap<>();
+			parameters.put("startDate", startDate);
+			parameters.put("endDate", endDate);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+			JasperViewer viewer = new JasperViewer(jasperPrint, false);
+			viewer.setTitle("Sales");
+			viewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			viewer.setLocationRelativeTo(null);
+			viewer.setVisible(true);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error printing report: " + e.getMessage());

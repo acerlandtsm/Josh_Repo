@@ -160,18 +160,18 @@ AND quantity >= $P{Quantity} :: INTEGER;]]></query>
 		</band>
 	</detail>
 	<pageFooter height="20" splitType="Stretch">
+		<element kind="line" uuid="f4c3e790-f870-4201-b7bc-f80b90a61c70" x="-3" y="0" width="560" height="1"/>
 		<element kind="textField" uuid="af1fc612-501c-43f4-b877-9995556c33a9" x="420" y="0" width="40" height="11" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></expression>
 		</element>
 		<element kind="textField" uuid="1f1d80f2-6802-4e68-9d3c-65977ba5fea6" x="460" y="0" width="90" height="11" fontSize="7.0" evaluationTime="Report" vTextAlign="Middle">
 			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
 		</element>
-		<element kind="line" uuid="f4c3e790-f870-4201-b7bc-f80b90a61c70" x="-3" y="0" width="560" height="1"/>
-		<element kind="textField" uuid="0d65b806-beb9-4f10-aebb-85ae9cd7f6cc" x="60" y="0" width="80" height="20" fontSize="8.0" pattern="MMMMM dd, yyyy">
-			<expression><![CDATA[new java.util.Date()]]></expression>
-		</element>
 		<element kind="staticText" uuid="97dbf38d-04b2-4d3c-8657-156dade9e274" x="0" y="0" width="60" height="20" fontSize="8.0">
 			<text><![CDATA[Generated on: ]]></text>
+		</element>
+		<element kind="textField" uuid="0d65b806-beb9-4f10-aebb-85ae9cd7f6cc" x="60" y="0" width="80" height="20" fontSize="8.0" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
 		</element>
 	</pageFooter>
 </jasperReport>
