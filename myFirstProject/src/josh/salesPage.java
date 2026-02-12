@@ -238,6 +238,8 @@ public class salesPage extends JPanel implements ActionListener {
 									comboUsers = new JComboBox<String>();
 									pnlQuantityEast.add(comboUsers);
 									Database db = new Database();
+									comboUsers.addItem("ALL");
+									comboUsers.setSelectedItem(null);
 									List<String> allUsers = db.selectAllUsers();
 									for (String user : allUsers) {
 										comboUsers.addItem(user);
@@ -247,6 +249,8 @@ public class salesPage extends JPanel implements ActionListener {
 									String[] comboList = {"Land", "Residential", "Commercial"};
 									comboCategory = new JComboBox<>(comboList);
 									pnlQuantityEast.add(comboCategory);
+									comboCategory.addItem("ALL");
+									comboCategory.setSelectedItem(null);
 								}
 								{
 									calStartDate = new JDateChooser();
