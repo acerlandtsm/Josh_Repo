@@ -36,11 +36,13 @@ public class printReport {
 		}
 	}
 	
-	public static void printSalesJReport(String reportPath, java.util.Date startDate, java.util.Date endDate) {
+	public static void printSalesJReport(String user, String category, String reportPath, java.util.Date startDate, java.util.Date endDate) {
 		try {
-			Connection conn = DBConnection.getConnection();
+			Connection conn = DBConnection.getConnection(); 
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
 			Map<String, Object> parameters = new java.util.HashMap<>();
+			parameters.put("user", user);
+			parameters.put("category", category);
 			parameters.put("startDate", startDate);
 			parameters.put("endDate", endDate);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);

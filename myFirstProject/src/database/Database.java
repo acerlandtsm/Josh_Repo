@@ -4,11 +4,33 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Database {
+	
+	public List<String> selectAllUsers() {
+		List<String> userList = new ArrayList<>();
+		String selectAllUser = "SELECT username FROM tbl_users";
+		
+		try {	Connection conn = DBConnection.getConnection();
+				Statement stmt =  conn.createStatement();
+				ResultSet rs = stmt.executeQuery(selectAllUser);
+				
+				while (rs.next()) {
+					String name = rs.getString("username");
+					userList.add(name);
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error, fetching data: " + e.getMessage());
+		}
+		return userList;
+	}
 	
 	//SELECT * PRODUCTS
 	public void selectAllProducts(DefaultTableModel model) {
@@ -90,7 +112,7 @@ public class Database {
 	}
 	
 	// INSERT SALES UPDATE PRODUCTS
-	public static Boolean addSales(int id, int quantity) {
+	public static Boolean addSales(String currentUser, int id, int quantity) {
 	    String checkStock = "SELECT quantity FROM tbl_products WHERE product_id = ?";
 	    String insertInto = "";
 	    String updateProducts = "UPDATE tbl_products SET quantity = quantity - ? WHERE product_id = ?";
@@ -108,9 +130,9 @@ public class Database {
 	                    JOptionPane.showMessageDialog(null, "Insufficient stock! Available: " + currentStock);
 	                    return false; 
 	                }else {
-	                	 insertInto = "INSERT INTO tbl_sales (product_id, product_name, category, product_price, quantity_sold, sold_price, date_sold) " +
-		                        "SELECT product_id, name, category, price, ?, (? * price), NOW() " +
-		                        "FROM tbl_products WHERE product_id = ?";
+	                	insertInto = "INSERT INTO tbl_sales (product_id, product_name, category, product_price, quantity_sold, sold_price, date_sold, created_by) " +
+	                            	 "SELECT product_id, name, category, price, ?, (? * price), NOW(), ? " +
+	                            	 "FROM tbl_products WHERE product_id = ?";
 	                }
 	            } else {
 	                JOptionPane.showMessageDialog(null, "Product not found!");
@@ -122,7 +144,8 @@ public class Database {
 	            
 	            stmtInsert.setInt(1, quantity);
 	            stmtInsert.setInt(2, quantity);
-	            stmtInsert.setInt(3, id);
+	            stmtInsert.setString(3, currentUser);
+	            stmtInsert.setInt(4, id);
 	            stmtInsert.executeUpdate();
 	            
 	            stmtUpdate.setInt(1, quantity);
