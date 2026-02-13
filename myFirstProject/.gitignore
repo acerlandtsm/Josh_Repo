@@ -15,4 +15,5 @@ replay_pid*
 /.classpath
 .classpath
 
-/.metadata/
+.metadata/
+.settings/
