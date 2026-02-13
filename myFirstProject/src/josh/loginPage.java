@@ -91,7 +91,7 @@ public class loginPage extends JFrame implements ActionListener {
 			{//CENTER PANEL
 				JPanel pnlCenter = new JPanel(new BorderLayout());
 				add(pnlCenter, BorderLayout.CENTER);
-				pnlCenter.setBorder(new EmptyBorder(20,70,10,70));
+				pnlCenter.setBorder(new EmptyBorder(20,70,40,70));
 				{
 					JPanel pnlCenterLabels = new JPanel(new GridLayout(3,1));
 					pnlCenter.add(pnlCenterLabels, BorderLayout.WEST);
@@ -101,9 +101,13 @@ public class loginPage extends JFrame implements ActionListener {
 						pnlCenterLabels.add(lblUsername);
 					}
 					{
+						placeholder  = new JLabel();
+						pnlCenterLabels.add(placeholder);
+					}
+					{
 						lblPassword = new JLabel("Password: ");
 						pnlCenterLabels.add(lblPassword);
-					}
+					} 
 				}
 				{
 					JPanel pnlCenterTxtField = new JPanel(new GridLayout(3,1));
@@ -111,6 +115,10 @@ public class loginPage extends JFrame implements ActionListener {
 					{
 						txtFieldUsername = new JTextField();
 						pnlCenterTxtField.add(txtFieldUsername);
+					}
+					{
+						placeholder  = new JLabel();
+						pnlCenterTxtField.add(placeholder);
 					}
 					{
 						passFieldPassword = new JPasswordField();

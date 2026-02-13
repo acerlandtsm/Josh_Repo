@@ -60,7 +60,7 @@ public class signupPage extends JFrame implements ActionListener {
 	
 	private void initGUI() {
 		setResizable(false);
-		setTitle("Signup Page");
+		setTitle("Sign Up");
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -74,40 +74,48 @@ public class signupPage extends JFrame implements ActionListener {
 			{
 				JPanel pnlNorth = new JPanel(new BorderLayout(5,5));
 				add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(LINE_BORDER);
+				pnlNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
 				{
-					lblSignUpNow = new JLabel("Signup with us Now!", SwingConstants.CENTER);
+					lblSignUpNow = new JLabel("Signup with us now!", SwingConstants.CENTER);
 					pnlNorth.add(lblSignUpNow, BorderLayout.NORTH);
 				}
 			}
 			{
-				JPanel pnlCenter = new JPanel(new GridLayout(4, 4, 10, 1));
+				JPanel pnlCenter = new JPanel(new BorderLayout());
 				add(pnlCenter, BorderLayout.CENTER);
-				pnlCenter.setBorder(LINE_BORDER);
 				{
+					JPanel pnlLabels = new JPanel(new GridLayout(4, 0));
+					pnlCenter.add(pnlLabels, BorderLayout.WEST);
+					pnlLabels.setBorder(new EmptyBorder(10, 30, 10, 10));
 					{
-						lblUsername = new JLabel("New Username: ", SwingConstants.CENTER);
-						pnlCenter.add(lblUsername);
+						lblUsername = new JLabel("New Username: ");
+						pnlLabels.add(lblUsername);
 					}
 					{
-						txtFieldUsername= new JTextField();
-						pnlCenter.add(txtFieldUsername);
-					}
-					{
-						lblPassword = new JLabel("Password: ", SwingConstants.CENTER);
-						pnlCenter.add(lblPassword);
-					}
-					{
-						passFieldPassword = new JPasswordField();
-						pnlCenter.add(passFieldPassword);
+						lblPassword = new JLabel("Password: ");
+						pnlLabels.add(lblPassword);
 					}
 					{
 						lblConfirmPassword = new JLabel("Confirm Password: ");
-						pnlCenter.add(lblConfirmPassword);
+						pnlLabels.add(lblConfirmPassword);
+					}
+				}
+				{
+					JPanel pnlTxtFields = new JPanel(new GridLayout(4,0));
+					pnlCenter.add(pnlTxtFields, BorderLayout.CENTER);
+					pnlTxtFields.setBorder(new EmptyBorder(10, 10, 10, 30));
+					
+					{
+						txtFieldUsername= new JTextField();
+						pnlTxtFields.add(txtFieldUsername);
+					}
+					{
+						passFieldPassword = new JPasswordField();
+						pnlTxtFields.add(passFieldPassword);
 					}
 					{
 						passFieldConfirmPassword = new JPasswordField();
-						pnlCenter.add(passFieldConfirmPassword);
+						pnlTxtFields.add(passFieldConfirmPassword);
 					}
 				}
 			}
