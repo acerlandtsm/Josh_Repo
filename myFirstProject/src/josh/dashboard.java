@@ -45,6 +45,9 @@ public class dashboard extends JFrame implements ActionListener {
 	private customersPage customersPage;
 	private salesPage salesPage;
 	
+	String currentUser = userSession.getUsername();
+	String currentRole = userSession.getRole();
+	
 	
 	public dashboard() throws HeadlessException {
 		initGUI();
@@ -77,19 +80,62 @@ public class dashboard extends JFrame implements ActionListener {
 			{
 				JPanel pnlNorth = new JPanel(new BorderLayout(3, 3));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(new CompoundBorder(outerBorder, innerBorder));
+				pnlNorth.setBorder(innerBorder);
 				{
-					String currentUser = userSession.getUsername();
-					String currentRole = userSession.getRole();
-					lblUsername = new JLabel("Welcome back " + currentRole + " " + currentUser);
-					pnlNorth.add(lblUsername, BorderLayout.LINE_START);
-					lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
-					
-					btnSignout = new JButton("Sign Out");
-					pnlNorth.add(btnSignout, BorderLayout.LINE_END);
-					btnSignout.setActionCommand("sign out");
-					btnSignout.addActionListener(this);
-				} 
+					JPanel pnlWelcome = new JPanel(new BorderLayout());
+					pnlNorth.add(pnlWelcome, BorderLayout.WEST);
+					pnlWelcome.setBorder(innerBorder);
+					{
+						lblUsername = new JLabel("Welcome back " + currentRole + " " + currentUser);
+						pnlWelcome.add(lblUsername, BorderLayout.LINE_START);
+						lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
+					}
+				}
+//				{	
+//					JPanel pnlSignOut = new JPanel(new BorderLayout());
+//					pnlNorth.add(pnlSignOut, BorderLayout.EAST);
+//					{
+//						btnSignout = new JButton("Sign Out");
+//						pnlSignOut.add(btnSignout);
+//						btnSignout.setActionCommand("sign out");
+//						btnSignout.addActionListener(this);
+//					}
+//				}
+				{
+					JPanel pnlButtons = new JPanel(new GridLayout(1,6));
+					pnlNorth.add(pnlButtons, BorderLayout.SOUTH);
+					pnlButtons.setBorder(new CompoundBorder(outerBorder, innerBorder));
+					{
+						btnHome = new JButton("HOME");
+						pnlButtons.add(btnHome);
+						btnHome.setActionCommand("home");
+						btnHome.addActionListener(this);
+					}
+					{
+						btnProducts = new JButton("PRODUCTS");
+						pnlButtons.add(btnProducts);
+						btnProducts.setActionCommand("products");
+						btnProducts.addActionListener(this);
+					}
+					{
+						btnCustomers = new JButton("CUSTOMERS");
+						pnlButtons.add(btnCustomers);
+						btnCustomers.setActionCommand("customers");
+						btnCustomers.addActionListener(this);
+					}
+					{
+						btnSales = new JButton("SALES");
+						pnlButtons.add(btnSales);
+						btnSales.setActionCommand("sales");
+						btnSales.addActionListener(this);
+					}
+					{
+						btnUsers = new JButton("USERS");
+						pnlButtons.add(btnUsers);
+						btnUsers.setActionCommand("users");
+						btnUsers.addActionListener(this);
+					}
+				}
 			}
 			{
 				cardLayout = new CardLayout();	
@@ -111,36 +157,7 @@ public class dashboard extends JFrame implements ActionListener {
 				pnlMain.add(pnlLineStart, BorderLayout.LINE_START);
 				pnlLineStart.setBorder(new EmptyBorder(100, 15, 20, 15));
 				{
-					{
-						btnHome = new JButton("HOME");
-						pnlLineStart.add(btnHome);
-						btnHome.setActionCommand("home");
-						btnHome.addActionListener(this);
-					}
-					{
-						btnProducts = new JButton("PRODUCTS");
-						pnlLineStart.add(btnProducts);
-						btnProducts.setActionCommand("products");
-						btnProducts.addActionListener(this);
-					}
-					{
-						btnCustomers = new JButton("CUSTOMERS");
-						pnlLineStart.add(btnCustomers);
-						btnCustomers.setActionCommand("customers");
-						btnCustomers.addActionListener(this);
-					}
-					{
-						btnSales = new JButton("SALES");
-						pnlLineStart.add(btnSales);
-						btnSales.setActionCommand("sales");
-						btnSales.addActionListener(this);
-					}
-					{
-						btnUsers = new JButton("USERS");
-						pnlLineStart.add(btnUsers);
-						btnUsers.setActionCommand("users");
-						btnUsers.addActionListener(this);
-					}
+					
 				}
 			}
 			{
