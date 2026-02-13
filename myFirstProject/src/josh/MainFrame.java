@@ -2,6 +2,7 @@ package josh;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
@@ -32,7 +33,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	private loginPage loginPage;
 	private signupPage signupPage;
-
+	
 	public MainFrame() throws HeadlessException {
 		initGUI();
 	}
@@ -66,7 +67,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			{//NORTH PANEL
 				JPanel pnlNorth = new JPanel(new BorderLayout(3, 3));
 				pnlMain.add(pnlNorth, BorderLayout.NORTH);
-				pnlNorth.setBorder(LINE_BORDER);
+				pnlNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
 				{
 					lblWelcome = new JLabel("Welcome to the Application!", SwingConstants.CENTER);
 					pnlNorth.add(lblWelcome, BorderLayout.CENTER);
@@ -84,7 +85,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				}
 			}
 			{//SOUTH PANEL
-				JPanel pnlSouth = new JPanel(new GridLayout(1, 2, 10, 0));
+				JPanel pnlSouth = new JPanel(new FlowLayout());
 				pnlMain.add(pnlSouth, BorderLayout.SOUTH);
 				{
 					btnLogin = new JButton("Log In");

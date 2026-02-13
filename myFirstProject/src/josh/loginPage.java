@@ -40,6 +40,7 @@ public class loginPage extends JFrame implements ActionListener {
 	private JLabel lblPleaseLogIn;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
+	private JLabel placeholder;
 	
 	private JTextField txtFieldUsername;
 	private JPasswordField passFieldPassword;
@@ -65,7 +66,7 @@ public class loginPage extends JFrame implements ActionListener {
 	//INITIALIZE GUI
 	public void initGUI() {
 		setResizable(false);
-		setTitle("Login Page");
+		setTitle("Login");
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -80,27 +81,49 @@ public class loginPage extends JFrame implements ActionListener {
 				JPanel pnlNorth = new JPanel(new BorderLayout(5, 5));
 				add(pnlNorth, BorderLayout.NORTH);
 				pnlNorth.setBorder(LINE_BORDER);
+				pnlNorth.setBorder(new EmptyBorder(30,0,0,0));
 				{
-					lblPleaseLogIn = new JLabel("Please Login your Account", SwingConstants.CENTER);
+					lblPleaseLogIn = new JLabel("Login to your Account!", SwingConstants.CENTER);
 					pnlNorth.add(lblPleaseLogIn, BorderLayout.NORTH);
+
 				}
 			}
 			{//CENTER PANEL
-				JPanel pnlCenter = new JPanel(new GridLayout(3, 3, 10, 1));
+				JPanel pnlCenter = new JPanel(new BorderLayout());
 				add(pnlCenter, BorderLayout.CENTER);
-				pnlCenter.setBorder(LINE_BORDER);
+				pnlCenter.setBorder(new EmptyBorder(20,70,10,70));
 				{
-					lblUsername = new JLabel("Username: ", SwingConstants.CENTER);
-					pnlCenter.add(lblUsername);
+					JPanel pnlCenterLabels = new JPanel(new GridLayout(3,1));
+					pnlCenter.add(pnlCenterLabels, BorderLayout.WEST);
 					
-					txtFieldUsername = new JTextField();
-					pnlCenter.add(txtFieldUsername);
-					
-					lblPassword = new JLabel("Password: ", SwingConstants.CENTER);
-					pnlCenter.add(lblPassword);
-					
-					passFieldPassword = new JPasswordField();
-					pnlCenter.add(passFieldPassword);
+					{
+						lblUsername = new JLabel("Username: ");
+						pnlCenterLabels.add(lblUsername);
+					}
+					{
+						lblPassword = new JLabel("Password: ");
+						pnlCenterLabels.add(lblPassword);
+					}
+				}
+				{
+					JPanel pnlCenterTxtField = new JPanel(new GridLayout(3,1));
+					pnlCenter.add(pnlCenterTxtField, BorderLayout.CENTER);
+					{
+						txtFieldUsername = new JTextField();
+						pnlCenterTxtField.add(txtFieldUsername);
+					}
+					{
+						passFieldPassword = new JPasswordField();
+						pnlCenterTxtField.add(passFieldPassword);
+					}
+				}
+				{
+					JPanel pnlCenterEast = new JPanel(new BorderLayout());
+					pnlCenter.add(pnlCenterEast, BorderLayout.EAST);
+					{
+						placeholder = new JLabel("");
+						pnlCenterEast.add(placeholder, BorderLayout.EAST);
+					}
 				}
 			}
 			{//SOUTH PANEL
