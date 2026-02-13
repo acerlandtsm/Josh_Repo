@@ -1,8 +1,0 @@
-INDEX VERSION 1.134+/home/mboriga/git/sample/.metadata/.plugins/org.eclipse.jdt.core
-1778752171.index
-2075334853.index
-1865797976.index
-4000501122.index
-2549468804.index
-3947883474.index
-2069769158.index

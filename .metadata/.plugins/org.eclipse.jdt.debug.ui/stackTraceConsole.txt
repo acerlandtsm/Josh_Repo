@@ -1,2 +1,0 @@
-						btnYes.setActionCommand("yes");
-						btnYes.addActionListener(this);
