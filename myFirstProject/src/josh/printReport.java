@@ -20,6 +20,7 @@ public class printReport {
 		try {
 			Connection conn = DBConnection.getConnection();
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
+			//InputStream rptStream = getClass().getResourceAsStream(reportPath);
 			Map<String, Object> parameters = new java.util.HashMap<>();
 			parameters.put("ActiveStatus", status);
 			parameters.put("Quantity", quantity);

@@ -484,7 +484,9 @@ public class productsPage extends JPanel implements ActionListener {
 		
 		case "preview": // PREVIEW OPTION
 
-			String productsReportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+			//String productsReportPath = "/home/mboriga/git/sample/myFirstProject/src/Reports/MyReports/MyProductReport.jasper";
+			String productsReportPath = System.getProperty("user.dir") + "/src/Reports/MyReports/MyProductReport.jasper";
+			
 			String activeStatus = txtFieldForActiveStats.getText();
 			String quantityNo = txtFieldForQuantityPrint.getText();
 			try {
